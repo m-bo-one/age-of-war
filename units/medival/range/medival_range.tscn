@@ -1,9 +1,10 @@
-[gd_scene load_steps=302 format=3 uid="uid://3mxmgboq06ah"]
+[gd_scene load_steps=303 format=3 uid="uid://3mxmgboq06ah"]
 
 [ext_resource type="Texture2D" uid="uid://db8h51i1f2kwt" path="res://age of war sprites/units/medival/range/die/medival_range_die0001.png" id="1_8ago0"]
-[ext_resource type="Script" path="res://units/medival/range/medival_range.gd" id="1_a8ttx"]
+[ext_resource type="Script" uid="uid://ca21yluh51g6u" path="res://units/medival/range/medival_range.gd" id="1_a8ttx"]
 [ext_resource type="Texture2D" uid="uid://bqygj06kfwp7d" path="res://age of war sprites/units/medival/range/walk/medival_range_walk0001.png" id="1_utw7g"]
 [ext_resource type="Texture2D" uid="uid://b5pbscrp6m002" path="res://age of war sprites/units/medival/range/walk/medival_range_walk0002.png" id="2_4x1tv"]
+[ext_resource type="PackedScene" uid="uid://df882i3glkoii" path="res://scenes/multiplayer/unit_synchronizer.tscn" id="2_qnp13"]
 [ext_resource type="Texture2D" uid="uid://bryg507s8adli" path="res://age of war sprites/units/medival/range/die/medival_range_die0002.png" id="2_uq34p"]
 [ext_resource type="Texture2D" uid="uid://cu003y3igoa2v" path="res://age of war sprites/units/medival/range/die/medival_range_die0003.png" id="3_lgk50"]
 [ext_resource type="Texture2D" uid="uid://34jg417rk8wh" path="res://age of war sprites/units/medival/range/walk/medival_range_walk0003.png" id="3_tvbxn"]
@@ -1365,6 +1366,8 @@ size = Vector2(68, 128)
 [node name="medival_range" type="RigidBody2D"]
 gravity_scale = 0.0
 script = ExtResource("1_a8ttx")
+
+[node name="UnitSynchronizer" parent="." instance=ExtResource("2_qnp13")]
 
 [node name="Shadow" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)

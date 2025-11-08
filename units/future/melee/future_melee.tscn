@@ -1,9 +1,10 @@
-[gd_scene load_steps=212 format=3 uid="uid://c7ieijgt4we1q"]
+[gd_scene load_steps=213 format=3 uid="uid://c7ieijgt4we1q"]
 
 [ext_resource type="Texture2D" uid="uid://doonm7u1ujlkq" path="res://age of war sprites/units/future/melee/attack/future_melee_attack0001.png" id="1_4r0f6"]
-[ext_resource type="Script" path="res://units/future/melee/future_melee.gd" id="1_6yupm"]
+[ext_resource type="Script" uid="uid://cra75r2j3kyht" path="res://units/future/melee/future_melee.gd" id="1_6yupm"]
 [ext_resource type="Texture2D" uid="uid://bpgy6xyt081mr" path="res://age of war sprites/units/future/melee/attack/future_melee_attack0002.png" id="2_01270"]
 [ext_resource type="Texture2D" uid="uid://cr1r5c47lxi16" path="res://age of war sprites/effects/shadow.png" id="2_qodwf"]
+[ext_resource type="PackedScene" uid="uid://df882i3glkoii" path="res://scenes/multiplayer/unit_synchronizer.tscn" id="2_yxmbl"]
 [ext_resource type="Texture2D" uid="uid://ch2ttgabf4ffn" path="res://age of war sprites/units/future/melee/attack/future_melee_attack0003.png" id="3_c725r"]
 [ext_resource type="Texture2D" uid="uid://nyuqu2k4cnqd" path="res://age of war sprites/units/future/melee/attack/future_melee_attack0004.png" id="4_x0x6g"]
 [ext_resource type="Texture2D" uid="uid://corc74tqwpgxu" path="res://age of war sprites/units/future/melee/attack/future_melee_attack0005.png" id="5_xumcw"]
@@ -860,6 +861,8 @@ size = Vector2(64, 119)
 [node name="future_melee" type="RigidBody2D"]
 gravity_scale = 0.0
 script = ExtResource("1_6yupm")
+
+[node name="UnitSynchronizer" parent="." instance=ExtResource("2_yxmbl")]
 
 [node name="Shadow" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)

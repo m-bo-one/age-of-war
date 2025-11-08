@@ -1,0 +1,177 @@
+[gd_scene load_steps=14 format=3 uid="uid://jiyawnwdsryv"]
+
+[ext_resource type="Script" uid="uid://dolu71oee334m" path="res://multiplayer_game.gd" id="1_psj0n"]
+[ext_resource type="Texture2D" uid="uid://bk20tm6uudxsk" path="res://age of war sprites/bg/background.png" id="2_4o0n6"]
+[ext_resource type="PackedScene" uid="uid://dx7f0wty4g5aa" path="res://UI/multiplayer/in_game_menu.tscn" id="3_1h3ll"]
+[ext_resource type="Script" uid="uid://b6rshjy3fg3j0" path="res://camera.gd" id="3_euiar"]
+[ext_resource type="Script" uid="uid://bdmh4erq4wjpk" path="res://scripts/camera_scroll.gd" id="5_dcvb5"]
+[ext_resource type="FontFile" uid="uid://bi67eh3ngbnui" path="res://fonts/Lora/static/Lora-Bold.ttf" id="6_31h2e"]
+[ext_resource type="PackedScene" uid="uid://0fkoqk68ht8c" path="res://scenes/ui/menu_button.tscn" id="7_x0jgn"]
+[ext_resource type="PackedScene" uid="uid://2elbildsvawn" path="res://effects/spawn_aura.tscn" id="8_65che"]
+[ext_resource type="PackedScene" uid="uid://ck7qewyjsqi43" path="res://bases/multiplayer/player_base.tscn" id="9_4o0n6"]
+[ext_resource type="Script" uid="uid://dasvd2nsi6yp2" path="res://multiplayer_spawner.gd" id="10_vchp7"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_gir1o"]
+font = ExtResource("6_31h2e")
+font_size = 28
+shadow_color = Color(0, 0, 0, 0.8)
+shadow_offset = Vector2(0, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xhm1x"]
+size = Vector2(50, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1lruk"]
+size = Vector2(2131, 22)
+
+[node name="multiplayer_game" type="Node2D"]
+script = ExtResource("1_psj0n")
+
+[node name="background_container" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="background sprite2" type="Sprite2D" parent="background_container"]
+z_index = -100
+position = Vector2(-1397, 168)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_4o0n6")
+metadata/_edit_lock_ = true
+
+[node name="background sprite" type="Sprite2D" parent="background_container"]
+z_index = -100
+position = Vector2(1574, 169)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_4o0n6")
+metadata/_edit_lock_ = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(550, 280)
+script = ExtResource("3_euiar")
+scroll_speed = 800
+left_most_position = 550
+right_most_position = 1650
+
+[node name="AudioListener2D" type="AudioListener2D" parent="Camera2D"]
+current = true
+
+[node name="in_game_menu" parent="Camera2D" instance=ExtResource("3_1h3ll")]
+offset_left = -576.0
+offset_top = -324.0
+offset_right = -576.0
+offset_bottom = -324.0
+
+[node name="right_box" type="ColorRect" parent="Camera2D" node_paths=PackedStringArray("camera")]
+z_index = 2
+offset_left = 376.0
+offset_top = -116.0
+offset_right = 576.0
+offset_bottom = 368.0
+color = Color(1, 1, 1, 0.392157)
+script = ExtResource("5_dcvb5")
+camera = NodePath("..")
+
+[node name="left_box" type="ColorRect" parent="Camera2D" node_paths=PackedStringArray("camera")]
+z_index = 2
+offset_left = -576.0
+offset_top = -116.0
+offset_right = -376.0
+offset_bottom = 367.0
+color = Color(1, 1, 1, 0.392157)
+script = ExtResource("5_dcvb5")
+camera = NodePath("..")
+inverted = true
+
+[node name="Label" type="Label" parent="Camera2D"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -123.0
+offset_top = -24.5
+offset_right = 123.0
+offset_bottom = 24.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 30
+text = "Game paused
+Press spacebar/escape again to resume"
+label_settings = SubResource("LabelSettings_gir1o")
+horizontal_alignment = 1
+
+[node name="BtnReturn" parent="Camera2D" instance=ExtResource("7_x0jgn")]
+process_mode = 3
+visible = false
+offset_left = -208.0
+offset_top = 60.0
+offset_right = 208.0
+offset_bottom = 95.0
+text = "Click here to return to the menu"
+show_hover_pointer = false
+dark = false
+
+[node name="player_1_spawn_location" type="Area2D" parent="."]
+position = Vector2(233, 565)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player_1_spawn_location"]
+shape = SubResource("RectangleShape2D_xhm1x")
+debug_color = Color(0.955277, 3.08037e-06, 0.544055, 0.42)
+
+[node name="PlayerSpawnAura" parent="player_1_spawn_location" instance=ExtResource("8_65che")]
+z_index = 2
+position = Vector2(-26, -43)
+
+[node name="player_2_spawn_location" type="Area2D" parent="."]
+position = Vector2(1965, 565)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player_2_spawn_location"]
+shape = SubResource("RectangleShape2D_xhm1x")
+debug_color = Color(0.955277, 3.08037e-06, 0.544055, 0.42)
+
+[node name="PlayerSpawnAura" parent="player_2_spawn_location" instance=ExtResource("8_65che")]
+z_index = 2
+position = Vector2(26, -43)
+
+[node name="floor" type="StaticBody2D" parent="."]
+position = Vector2(630, 598)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="floor"]
+position = Vector2(436.5, -6)
+shape = SubResource("RectangleShape2D_1lruk")
+
+[node name="player_1_base" parent="." instance=ExtResource("9_4o0n6")]
+position = Vector2(118, 565)
+
+[node name="player_2_base" parent="." instance=ExtResource("9_4o0n6")]
+position = Vector2(2080, 565)
+scale = Vector2(-1, 1)
+collision_layer = 8
+player_side = 2
+
+[node name="player_1_units" type="Node2D" parent="."]
+
+[node name="player_2_units" type="Node2D" parent="."]
+
+[node name="player_1_multi_spawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("../player_1_units")
+script = ExtResource("10_vchp7")
+
+[node name="player_2_multi_spawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("../player_2_units")
+script = ExtResource("10_vchp7")
+
+[node name="medival_special_timer" type="Timer" parent="."]
+
+[connection signal="mouse_entered" from="Camera2D/right_box" to="Camera2D" method="_on_mouse_camera_move_right_mouse_entered"]
+[connection signal="mouse_exited" from="Camera2D/right_box" to="Camera2D" method="stop_camera_moving"]
+[connection signal="mouse_entered" from="Camera2D/left_box" to="Camera2D" method="_on_mouse_camera_move_left_mouse_entered"]
+[connection signal="mouse_exited" from="Camera2D/left_box" to="Camera2D" method="stop_camera_moving"]
+[connection signal="pressed" from="Camera2D/BtnReturn" to="." method="_on_button_pressed"]
+[connection signal="body_entered" from="player_1_spawn_location" to="." method="_on_player_spawn_location_body_entered"]
+[connection signal="body_exited" from="player_1_spawn_location" to="." method="_on_player_spawn_location_body_exited"]
+[connection signal="body_entered" from="player_2_spawn_location" to="." method="_on_player_spawn_location_body_entered"]
+[connection signal="body_exited" from="player_2_spawn_location" to="." method="_on_player_spawn_location_body_exited"]
+[connection signal="timeout" from="medival_special_timer" to="." method="_on_medival_special_timer_timeout"]

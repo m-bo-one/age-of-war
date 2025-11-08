@@ -1,8 +1,9 @@
-[gd_scene load_steps=244 format=3 uid="uid://ca15vbklojxnj"]
+[gd_scene load_steps=245 format=3 uid="uid://ca15vbklojxnj"]
 
 [ext_resource type="Texture2D" uid="uid://m6k7rnfjux6v" path="res://age of war sprites/units/knight/melee/attack/knight_melee_attack0002.png" id="1_bqi04"]
-[ext_resource type="Script" path="res://units/knight/melee/knight_melee.gd" id="1_kocjl"]
+[ext_resource type="Script" uid="uid://cxt35300k8q24" path="res://units/knight/melee/knight_melee.gd" id="1_kocjl"]
 [ext_resource type="Texture2D" uid="uid://cr1r5c47lxi16" path="res://age of war sprites/effects/shadow.png" id="2_dhq21"]
+[ext_resource type="PackedScene" uid="uid://df882i3glkoii" path="res://scenes/multiplayer/unit_synchronizer.tscn" id="2_jy8l3"]
 [ext_resource type="Texture2D" uid="uid://b388myxdupfko" path="res://age of war sprites/units/knight/melee/attack/knight_melee_attack0003.png" id="2_tk8cr"]
 [ext_resource type="Texture2D" uid="uid://dts27w1g0jqwt" path="res://age of war sprites/units/knight/melee/attack/knight_melee_attack0004.png" id="3_jy4xs"]
 [ext_resource type="Texture2D" uid="uid://6abjncibsgyx" path="res://age of war sprites/units/knight/melee/attack/knight_melee_attack0005.png" id="4_m3254"]
@@ -985,6 +986,8 @@ size = Vector2(56, 103)
 gravity_scale = 0.0
 lock_rotation = true
 script = ExtResource("1_kocjl")
+
+[node name="UnitSynchronizer" parent="." instance=ExtResource("2_jy8l3")]
 
 [node name="Shadow" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)

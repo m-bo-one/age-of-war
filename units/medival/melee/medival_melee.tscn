@@ -1,9 +1,10 @@
-[gd_scene load_steps=332 format=3 uid="uid://d0xcoqhjj5v87"]
+[gd_scene load_steps=333 format=3 uid="uid://d0xcoqhjj5v87"]
 
-[ext_resource type="Script" path="res://units/medival/melee/medival_melee.gd" id="1_fwioh"]
+[ext_resource type="Script" uid="uid://i4bdo8ldq3da" path="res://units/medival/melee/medival_melee.gd" id="1_fwioh"]
 [ext_resource type="Texture2D" uid="uid://crxr8mcc0tbyf" path="res://age of war sprites/units/medival/melee/attack/medival_melee_attack0002.png" id="1_ka1rn"]
 [ext_resource type="Texture2D" uid="uid://cr1r5c47lxi16" path="res://age of war sprites/effects/shadow.png" id="2_4e2w5"]
 [ext_resource type="Texture2D" uid="uid://dkm1wfndxv75t" path="res://age of war sprites/units/medival/melee/attack/medival_melee_attack0003.png" id="2_7fel3"]
+[ext_resource type="PackedScene" uid="uid://df882i3glkoii" path="res://scenes/multiplayer/unit_synchronizer.tscn" id="2_egfgf"]
 [ext_resource type="Texture2D" uid="uid://yufudnnviioh" path="res://age of war sprites/units/medival/melee/attack/medival_melee_attack0004.png" id="3_nw7wr"]
 [ext_resource type="Texture2D" uid="uid://cvvw2vcos8nj1" path="res://age of war sprites/units/medival/melee/attack/medival_melee_attack0005.png" id="4_djldy"]
 [ext_resource type="Texture2D" uid="uid://bwg18325yggom" path="res://age of war sprites/units/medival/melee/attack/medival_melee_attack0006.png" id="5_5agob"]
@@ -1336,6 +1337,8 @@ size = Vector2(68, 127)
 [node name="medival_melee" type="RigidBody2D"]
 gravity_scale = 0.0
 script = ExtResource("1_fwioh")
+
+[node name="UnitSynchronizer" parent="." instance=ExtResource("2_egfgf")]
 
 [node name="Shadow" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)

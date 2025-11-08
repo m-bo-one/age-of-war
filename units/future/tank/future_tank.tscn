@@ -1,8 +1,9 @@
-[gd_scene load_steps=180 format=3 uid="uid://5w6hh4jkl2mo"]
+[gd_scene load_steps=181 format=3 uid="uid://5w6hh4jkl2mo"]
 
-[ext_resource type="Script" path="res://units/future/tank/future_tank.gd" id="1_jq22a"]
+[ext_resource type="Script" uid="uid://bvvjc4v1ct08n" path="res://units/future/tank/future_tank.gd" id="1_jq22a"]
 [ext_resource type="Texture2D" uid="uid://lbayk3stnyqi" path="res://age of war sprites/units/future/tank/attack/future_tank_attack0001.png" id="1_yuep6"]
 [ext_resource type="Texture2D" uid="uid://c3y1mtb14tqtv" path="res://age of war sprites/units/future/tank/attack/future_tank_attack0002.png" id="2_gtakp"]
+[ext_resource type="PackedScene" uid="uid://df882i3glkoii" path="res://scenes/multiplayer/unit_synchronizer.tscn" id="2_juvoj"]
 [ext_resource type="Texture2D" uid="uid://cr1r5c47lxi16" path="res://age of war sprites/effects/shadow.png" id="2_kj5ga"]
 [ext_resource type="Texture2D" uid="uid://bo55w3ybugtre" path="res://age of war sprites/units/future/tank/attack/future_tank_attack0003.png" id="3_ennvf"]
 [ext_resource type="Texture2D" uid="uid://cr6jhvkrn1ce7" path="res://age of war sprites/units/future/tank/attack/future_tank_attack0004.png" id="4_bd5gj"]
@@ -728,6 +729,8 @@ size = Vector2(248, 135)
 
 [node name="future_tank" type="RigidBody2D"]
 script = ExtResource("1_jq22a")
+
+[node name="UnitSynchronizer" parent="." instance=ExtResource("2_juvoj")]
 
 [node name="Shadow" type="Sprite2D" parent="."]
 position = Vector2(0.499996, 2.38419e-07)

@@ -13,31 +13,31 @@ var rng = RandomNumberGenerator.new()
 var shake_strength: float = 0.0
 
 func apply_shake():
-	shake_strength = randomStrength
+    shake_strength = randomStrength
 
 func randomOffset() -> Vector2:
-	return Vector2(rng.randf_range(-shake_strength, shake_strength), rng.randf_range(-shake_strength, shake_strength))
+    return Vector2(rng.randf_range(-shake_strength, shake_strength), rng.randf_range(-shake_strength, shake_strength))
 
 func _ready():
-	self.limit_right = right_most_position + 576 
-	velocity = Vector2.ZERO
+    self.limit_right = right_most_position + 576 
+    velocity = Vector2.ZERO
 
 func _process(delta):
-	if velocity != Vector2.ZERO:
-		var strength: float = 1.0
-		position.x += int(velocity.x * delta * scroll_speed)
-	position.x = clamp(position.x, left_most_position, right_most_position)
-	
-	if shake_strength > 0:
-		shake_strength = lerpf(shake_strength, 0.0, shakeFade * delta)
-		
-		offset = randomOffset()
+    if velocity != Vector2.ZERO:
+        var strength: float = 1.0
+        position.x += int(velocity.x * delta * scroll_speed)
+    position.x = clamp(position.x, left_most_position, right_most_position)
+    
+    if shake_strength > 0:
+        shake_strength = lerpf(shake_strength, 0.0, shakeFade * delta)
+        
+        offset = randomOffset()
 
 func camera_shake(duration: float, intensity: float):
-	pass
+    pass
 
 func stop_camera_moving():
-	velocity = Vector2.ZERO
+    velocity = Vector2.ZERO
 
 func set_camera_movement_velocity(vel: float):
-	velocity = Vector2(vel, 0.0)
+    velocity = Vector2(vel, 0.0)

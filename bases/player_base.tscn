@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://c36x5w6hobq86"]
 
-[ext_resource type="Script" path="res://bases/player_base.gd" id="1_25s31"]
+[ext_resource type="Script" uid="uid://dwxqvr25h705a" path="res://bases/player_base.gd" id="1_25s31"]
 [ext_resource type="Texture2D" uid="uid://c1xsucbfkbfiv" path="res://age of war sprites/bases/cave/base/base.png" id="2_t4o2h"]
 [ext_resource type="Texture2D" uid="uid://clxxa7qqv10di" path="res://age of war sprites/bases/cave/tower_base/base_tower_bottom.png" id="3_q1xho"]
 [ext_resource type="Texture2D" uid="uid://d1sj5rlj0tqvf" path="res://age of war sprites/bases/cave/tower_part/base_tower_part.png" id="4_07h3k"]

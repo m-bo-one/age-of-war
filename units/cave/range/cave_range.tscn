@@ -1,11 +1,12 @@
-[gd_scene load_steps=239 format=3 uid="uid://gex6r6cd1sa"]
+[gd_scene load_steps=240 format=3 uid="uid://gex6r6cd1sa"]
 
 [ext_resource type="Texture2D" uid="uid://l6g2pmglx4k" path="res://age of war sprites/units/cave/range/walk/cave_range_walk0001.png" id="1_c7mx8"]
 [ext_resource type="Texture2D" uid="uid://cj4phrsitc3n2" path="res://age of war sprites/units/cave/range/die/cave_range_die0001.png" id="1_k37tx"]
-[ext_resource type="Script" path="res://units/cave/range/cave_range.gd" id="1_qqlps"]
+[ext_resource type="Script" uid="uid://b22f86xy6uqtu" path="res://units/cave/range/cave_range.gd" id="1_qqlps"]
 [ext_resource type="Texture2D" uid="uid://cr1r5c47lxi16" path="res://age of war sprites/effects/shadow.png" id="2_5xu4j"]
 [ext_resource type="Texture2D" uid="uid://dq1c0x4q1y2el" path="res://age of war sprites/units/cave/range/die/cave_range_die0002.png" id="2_n5ocv"]
 [ext_resource type="Texture2D" uid="uid://0q1ripoyw54l" path="res://age of war sprites/units/cave/range/walk/cave_range_walk0002.png" id="2_oihdh"]
+[ext_resource type="PackedScene" uid="uid://df882i3glkoii" path="res://scenes/multiplayer/unit_synchronizer.tscn" id="2_qxic8"]
 [ext_resource type="Texture2D" uid="uid://dqn5mw7b27nrq" path="res://age of war sprites/units/cave/range/walk/cave_range_walk0003.png" id="3_6prwg"]
 [ext_resource type="Texture2D" uid="uid://mikrns3iii6u" path="res://age of war sprites/units/cave/range/die/cave_range_die0003.png" id="3_s1edt"]
 [ext_resource type="Texture2D" uid="uid://ubdhh08ac7j2" path="res://age of war sprites/units/cave/range/die/cave_range_die0004.png" id="4_0wxl2"]
@@ -973,6 +974,8 @@ size = Vector2(40, 88)
 gravity_scale = 0.0
 lock_rotation = true
 script = ExtResource("1_qqlps")
+
+[node name="UnitSynchronizer" parent="." instance=ExtResource("2_qxic8")]
 
 [node name="Shadow" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)

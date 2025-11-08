@@ -1,0 +1,127 @@
+[gd_scene load_steps=2 format=3 uid="uid://ce2i10yjaubek"]
+
+[ext_resource type="Script" uid="uid://kimv8ibkx206" path="res://scenes/multiplayer/lan.gd" id="1_dklkr"]
+
+[node name="Lan" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dklkr")
+
+[node name="Entry" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -3.0
+offset_right = 20.0
+offset_bottom = 37.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="IP" type="VBoxContainer" parent="Entry"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -96.0
+offset_top = -121.0
+offset_right = 56.0
+offset_bottom = -63.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Entry/IP"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "IP address:"
+
+[node name="LineEdit" type="LineEdit" parent="Entry/IP"]
+layout_mode = 2
+
+[node name="Port" type="VBoxContainer" parent="Entry"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -96.0
+offset_top = -64.0
+offset_right = 56.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Entry/Port"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Port:"
+
+[node name="LineEdit" type="LineEdit" parent="Entry/Port"]
+layout_mode = 2
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="Entry"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -96.0
+offset_top = 6.0
+offset_right = 54.0
+offset_bottom = 72.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BtnCreate" type="Button" parent="Entry/VBoxContainer3"]
+layout_mode = 2
+text = "Host"
+
+[node name="BtnConnect" type="Button" parent="Entry/VBoxContainer3"]
+layout_mode = 2
+text = "Connect"
+
+[node name="LobbyLoader" type="Control" parent="."]
+visible = false
+anchors_preset = 0
+offset_left = 449.0
+offset_top = 97.0
+offset_right = 489.0
+offset_bottom = 137.0
+
+[node name="LblAwait" type="Label" parent="LobbyLoader"]
+layout_mode = 0
+offset_left = -82.0
+offset_top = -13.0
+offset_right = 85.0
+offset_bottom = 10.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "awaiting for players..."
+horizontal_alignment = 1
+
+[node name="LblErr" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 326.0
+offset_top = -48.0
+offset_right = 563.0
+offset_bottom = -2.0
+theme_override_colors/font_color = Color(0.79124314, 0.02497281, 0, 1)
+text = "Error"
+horizontal_alignment = 1
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="pressed" from="Entry/VBoxContainer3/BtnCreate" to="." method="_on_btn_create_pressed"]
+[connection signal="pressed" from="Entry/VBoxContainer3/BtnConnect" to="." method="_on_btn_connect_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

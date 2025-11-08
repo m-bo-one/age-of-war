@@ -1,6 +1,7 @@
-[gd_scene load_steps=279 format=3 uid="uid://1v7bw6g8kre1"]
+[gd_scene load_steps=280 format=3 uid="uid://1v7bw6g8kre1"]
 
-[ext_resource type="Script" path="res://units/knight/tank/knight_tank.gd" id="1_4gjvt"]
+[ext_resource type="Script" uid="uid://dtbxdeej3oltw" path="res://units/knight/tank/knight_tank.gd" id="1_4gjvt"]
+[ext_resource type="PackedScene" uid="uid://df882i3glkoii" path="res://scenes/multiplayer/unit_synchronizer.tscn" id="2_g5d11"]
 [ext_resource type="Texture2D" uid="uid://cud60f4caiew7" path="res://age of war sprites/units/knight/tank/attack/knight_tank_attack0001.png" id="2_mnely"]
 [ext_resource type="Texture2D" uid="uid://cr1r5c47lxi16" path="res://age of war sprites/effects/shadow.png" id="2_yk2xp"]
 [ext_resource type="Texture2D" uid="uid://yyy1uat5x7e" path="res://age of war sprites/units/knight/tank/attack/knight_tank_attack0002.png" id="3_qv5k3"]
@@ -1122,6 +1123,8 @@ size = Vector2(170, 135)
 [node name="knight_tank" type="RigidBody2D"]
 gravity_scale = 0.0
 script = ExtResource("1_4gjvt")
+
+[node name="UnitSynchronizer" parent="." instance=ExtResource("2_g5d11")]
 
 [node name="Shadow" type="Sprite2D" parent="."]
 position = Vector2(-1.13687e-13, 2.38419e-07)

@@ -1,9 +1,10 @@
-[gd_scene load_steps=306 format=3 uid="uid://555135b3ersn"]
+[gd_scene load_steps=307 format=3 uid="uid://555135b3ersn"]
 
-[ext_resource type="Script" path="res://units/miltary/range/miltary_range.gd" id="1_iebnb"]
+[ext_resource type="Script" uid="uid://cf1x246htievo" path="res://units/miltary/range/miltary_range.gd" id="1_iebnb"]
 [ext_resource type="Texture2D" uid="uid://1lqgkgkfc6ge" path="res://age of war sprites/units/miltary/range/die/miltary_range_die0001.png" id="1_tnyni"]
 [ext_resource type="Texture2D" uid="uid://cr1r5c47lxi16" path="res://age of war sprites/effects/shadow.png" id="2_ftbur"]
 [ext_resource type="Texture2D" uid="uid://ss4bmhya4v6p" path="res://age of war sprites/units/miltary/range/die/miltary_range_die0002.png" id="2_ijbdu"]
+[ext_resource type="PackedScene" uid="uid://df882i3glkoii" path="res://scenes/multiplayer/unit_synchronizer.tscn" id="2_o8m0f"]
 [ext_resource type="Texture2D" uid="uid://dfbmm6lxvncuu" path="res://age of war sprites/units/miltary/range/die/miltary_range_die0003.png" id="3_upumt"]
 [ext_resource type="Texture2D" uid="uid://cjamykvpvoydr" path="res://age of war sprites/units/miltary/range/die/miltary_range_die0004.png" id="4_di735"]
 [ext_resource type="Texture2D" uid="uid://ht8601y7b1fn" path="res://age of war sprites/units/miltary/range/die/miltary_range_die0005.png" id="5_j366u"]
@@ -1305,6 +1306,8 @@ size = Vector2(68, 128)
 
 [node name="miltary_range" type="RigidBody2D"]
 script = ExtResource("1_iebnb")
+
+[node name="UnitSynchronizer" parent="." instance=ExtResource("2_o8m0f")]
 
 [node name="Shadow" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)

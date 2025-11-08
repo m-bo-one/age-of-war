@@ -1,7 +1,8 @@
-[gd_scene load_steps=190 format=3 uid="uid://dexhbnofnhph0"]
+[gd_scene load_steps=191 format=3 uid="uid://dexhbnofnhph0"]
 
-[ext_resource type="Script" path="res://units/cave/tank/cave_tank.gd" id="1_egoxl"]
+[ext_resource type="Script" uid="uid://deqn4qodidxlw" path="res://units/cave/tank/cave_tank.gd" id="1_egoxl"]
 [ext_resource type="Texture2D" uid="uid://bicw4vxjolkse" path="res://age of war sprites/units/cave/tank/attack/cave_tank_attack0001.png" id="2_jol8u"]
+[ext_resource type="PackedScene" uid="uid://df882i3glkoii" path="res://scenes/multiplayer/unit_synchronizer.tscn" id="2_kspe3"]
 [ext_resource type="Texture2D" uid="uid://dvixyo0jwi657" path="res://age of war sprites/units/cave/tank/attack/cave_tank_attack0002.png" id="3_tpljt"]
 [ext_resource type="Texture2D" uid="uid://d3ei0nh1mkqjo" path="res://age of war sprites/units/cave/tank/attack/cave_tank_attack0003.png" id="4_e38ap"]
 [ext_resource type="Texture2D" uid="uid://drxcf236qeynl" path="res://age of war sprites/units/cave/tank/attack/cave_tank_attack0004.png" id="5_y4nt6"]
@@ -767,6 +768,8 @@ size = Vector2(162, 130)
 gravity_scale = 0.0
 lock_rotation = true
 script = ExtResource("1_egoxl")
+
+[node name="UnitSynchronizer" parent="." instance=ExtResource("2_kspe3")]
 
 [node name="Shadow" type="Sprite2D" parent="."]
 texture = ExtResource("187_q6qqf")

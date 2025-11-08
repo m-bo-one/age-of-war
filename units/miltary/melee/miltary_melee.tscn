@@ -1,9 +1,10 @@
-[gd_scene load_steps=304 format=3 uid="uid://x0vxi7mfo5r0"]
+[gd_scene load_steps=305 format=3 uid="uid://x0vxi7mfo5r0"]
 
 [ext_resource type="Texture2D" uid="uid://dsdc0bf0rjant" path="res://age of war sprites/units/miltary/melee/attack/miltary_melee_attack0001.png" id="1_1r42s"]
-[ext_resource type="Script" path="res://units/miltary/melee/miltary_melee.gd" id="1_q4xbq"]
+[ext_resource type="Script" uid="uid://bwtp2hbe2nsfd" path="res://units/miltary/melee/miltary_melee.gd" id="1_q4xbq"]
 [ext_resource type="Texture2D" uid="uid://bqjwx2y88dpt7" path="res://age of war sprites/units/miltary/melee/attack/miltary_melee_attack0002.png" id="2_5dtcw"]
 [ext_resource type="Texture2D" uid="uid://cr1r5c47lxi16" path="res://age of war sprites/effects/shadow.png" id="2_tt6h6"]
+[ext_resource type="PackedScene" uid="uid://df882i3glkoii" path="res://scenes/multiplayer/unit_synchronizer.tscn" id="2_xlenm"]
 [ext_resource type="Texture2D" uid="uid://yom2mqkcws2o" path="res://age of war sprites/units/miltary/melee/attack/miltary_melee_attack0003.png" id="3_jiks0"]
 [ext_resource type="Texture2D" uid="uid://cq3m8sx4ao568" path="res://age of war sprites/units/miltary/melee/attack/miltary_melee_attack0004.png" id="4_ga7lw"]
 [ext_resource type="Texture2D" uid="uid://dm72jprkus8yq" path="res://age of war sprites/units/miltary/melee/attack/miltary_melee_attack0005.png" id="5_3eiol"]
@@ -1225,6 +1226,8 @@ size = Vector2(78, 125)
 [node name="miltary_melee" type="RigidBody2D"]
 gravity_scale = 0.0
 script = ExtResource("1_q4xbq")
+
+[node name="UnitSynchronizer" parent="." instance=ExtResource("2_xlenm")]
 
 [node name="Shadow" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)

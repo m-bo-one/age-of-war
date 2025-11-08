@@ -1,8 +1,9 @@
-[gd_scene load_steps=318 format=3 uid="uid://blt36y4howeeb"]
+[gd_scene load_steps=319 format=3 uid="uid://blt36y4howeeb"]
 
-[ext_resource type="Shader" path="res://units/future/super_soldier/future_super_soldier.gdshader" id="1_ak6vw"]
-[ext_resource type="Script" path="res://units/future/super_soldier/future_super_soldier.gd" id="1_h6cxu"]
+[ext_resource type="Shader" uid="uid://hbusv3lt4qp7" path="res://units/future/super_soldier/future_super_soldier.gdshader" id="1_ak6vw"]
+[ext_resource type="Script" uid="uid://de1vlhdlpkfcc" path="res://units/future/super_soldier/future_super_soldier.gd" id="1_h6cxu"]
 [ext_resource type="Texture2D" uid="uid://beu4r7kw31tnb" path="res://age of war sprites/units/future/range/die/future_range_die0001.png" id="1_shlxt"]
+[ext_resource type="PackedScene" uid="uid://df882i3glkoii" path="res://scenes/multiplayer/unit_synchronizer.tscn" id="2_gase6"]
 [ext_resource type="Texture2D" uid="uid://c2xkalmd26fpw" path="res://age of war sprites/units/future/range/die/future_range_die0002.png" id="2_q3v2q"]
 [ext_resource type="Texture2D" uid="uid://cr1r5c47lxi16" path="res://age of war sprites/effects/shadow.png" id="2_qholv"]
 [ext_resource type="Texture2D" uid="uid://hfblq538wdx7" path="res://age of war sprites/units/future/range/die/future_range_die0003.png" id="3_b18u3"]
@@ -1289,6 +1290,8 @@ size = Vector2(68, 128)
 [node name="future_super_soldier" type="RigidBody2D"]
 script = ExtResource("1_h6cxu")
 is_player_owned = null
+
+[node name="UnitSynchronizer" parent="." instance=ExtResource("2_gase6")]
 
 [node name="Shadow" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)

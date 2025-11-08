@@ -1,7 +1,8 @@
-[gd_scene load_steps=316 format=3 uid="uid://pdt03a858uxs"]
+[gd_scene load_steps=317 format=3 uid="uid://pdt03a858uxs"]
 
-[ext_resource type="Script" path="res://units/future/range/future_range.gd" id="1_xo80n"]
+[ext_resource type="Script" uid="uid://dse07oklui1e3" path="res://units/future/range/future_range.gd" id="1_xo80n"]
 [ext_resource type="Texture2D" uid="uid://cr1r5c47lxi16" path="res://age of war sprites/effects/shadow.png" id="2_2rumn"]
+[ext_resource type="PackedScene" uid="uid://df882i3glkoii" path="res://scenes/multiplayer/unit_synchronizer.tscn" id="2_8uvhq"]
 [ext_resource type="Texture2D" uid="uid://beu4r7kw31tnb" path="res://age of war sprites/units/future/range/die/future_range_die0001.png" id="2_20m53"]
 [ext_resource type="Texture2D" uid="uid://c2xkalmd26fpw" path="res://age of war sprites/units/future/range/die/future_range_die0002.png" id="3_iysau"]
 [ext_resource type="Texture2D" uid="uid://hfblq538wdx7" path="res://age of war sprites/units/future/range/die/future_range_die0003.png" id="4_l6p7j"]
@@ -1284,6 +1285,8 @@ size = Vector2(68, 128)
 
 [node name="future_range" type="RigidBody2D"]
 script = ExtResource("1_xo80n")
+
+[node name="UnitSynchronizer" parent="." instance=ExtResource("2_8uvhq")]
 
 [node name="Shadow" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)

@@ -1,9 +1,10 @@
-[gd_scene load_steps=186 format=3 uid="uid://hk6o6e2n3pu2"]
+[gd_scene load_steps=187 format=3 uid="uid://hk6o6e2n3pu2"]
 
-[ext_resource type="Script" path="res://units/miltary/tank/miltary_tank.gd" id="1_2n135"]
+[ext_resource type="Script" uid="uid://bq1k4ltaietaw" path="res://units/miltary/tank/miltary_tank.gd" id="1_2n135"]
 [ext_resource type="Texture2D" uid="uid://cjp3ygdl04qw4" path="res://age of war sprites/units/miltary/tank/attack/miltary_tank_attack0001.png" id="1_ocku8"]
 [ext_resource type="Texture2D" uid="uid://dfmkuvthqmqnj" path="res://age of war sprites/units/miltary/tank/attack/miltary_tank_attack0002.png" id="2_0r87r"]
 [ext_resource type="Texture2D" uid="uid://cr1r5c47lxi16" path="res://age of war sprites/effects/shadow.png" id="2_3dtm3"]
+[ext_resource type="PackedScene" uid="uid://df882i3glkoii" path="res://scenes/multiplayer/unit_synchronizer.tscn" id="2_k1phm"]
 [ext_resource type="Texture2D" uid="uid://bqaf7nksyxlcn" path="res://age of war sprites/units/miltary/tank/attack/miltary_tank_attack0003.png" id="3_wuf34"]
 [ext_resource type="Texture2D" uid="uid://dhciq7buy2vtp" path="res://age of war sprites/units/miltary/tank/attack/miltary_tank_attack0004.png" id="4_oj8n6"]
 [ext_resource type="Texture2D" uid="uid://s5vxgesiqpt6" path="res://age of war sprites/units/miltary/tank/attack/miltary_tank_attack0005.png" id="5_nqk1k"]
@@ -749,6 +750,8 @@ size = Vector2(280, 106)
 
 [node name="miltary_tank" type="RigidBody2D"]
 script = ExtResource("1_2n135")
+
+[node name="UnitSynchronizer" parent="." instance=ExtResource("2_k1phm")]
 
 [node name="Shadow" type="Sprite2D" parent="."]
 position = Vector2(0.499996, 2.38419e-07)

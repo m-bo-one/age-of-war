@@ -1,6 +1,6 @@
 [gd_scene load_steps=755 format=3 uid="uid://co2awp7evy8sm"]
 
-[ext_resource type="Script" path="res://scenes/main_menu.gd" id="1_bd7un"]
+[ext_resource type="Script" uid="uid://dd47wfp610wy" path="res://scenes/main_menu.gd" id="1_bd7un"]
 [ext_resource type="PackedScene" uid="uid://dwx7knn8q5clv" path="res://scenes/menu_parallax_background.tscn" id="2_6vtid"]
 [ext_resource type="Texture2D" uid="uid://cu8pshlufb64c" path="res://age of war sprites/effects/logo/main menu0001.png" id="2_ygwc1"]
 [ext_resource type="Texture2D" uid="uid://nv323dehn560" path="res://age of war sprites/effects/logo/main menu0002.png" id="3_ubj3u"]
@@ -132,7 +132,7 @@
 [ext_resource type="Texture2D" uid="uid://ta5pa4xjwd2i" path="res://age of war sprites/effects/logo/main menu0128.png" id="129_2h7ef"]
 [ext_resource type="Texture2D" uid="uid://dt4l0sl8q4mia" path="res://age of war sprites/effects/logo/main menu0129.png" id="130_14gqc"]
 [ext_resource type="Texture2D" uid="uid://bcj43p40hrhwd" path="res://age of war sprites/effects/logo/main menu0130.png" id="131_j2gqn"]
-[ext_resource type="Script" path="res://scripts/menu_character_switcher.gd" id="133_3dyob"]
+[ext_resource type="Script" uid="uid://de1ku0e7e7y50" path="res://scripts/menu_character_switcher.gd" id="133_3dyob"]
 [ext_resource type="Texture2D" uid="uid://ugavwip3lugw" path="res://age of war sprites/units/cave/melee/walk/cave_melee_walk0001.png" id="247_s8c40"]
 [ext_resource type="Texture2D" uid="uid://bay7is0wapmjq" path="res://age of war sprites/units/cave/melee/walk/cave_melee_walk0002.png" id="248_wmym7"]
 [ext_resource type="Texture2D" uid="uid://c77dm822etib2" path="res://age of war sprites/units/cave/melee/walk/cave_melee_walk0003.png" id="249_s5264"]

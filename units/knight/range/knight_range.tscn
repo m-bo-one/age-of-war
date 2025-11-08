@@ -1,7 +1,8 @@
-[gd_scene load_steps=324 format=3 uid="uid://bv4chsqcvty6w"]
+[gd_scene load_steps=325 format=3 uid="uid://bv4chsqcvty6w"]
 
-[ext_resource type="Script" path="res://units/knight/range/knight_range.gd" id="1_be3q5"]
+[ext_resource type="Script" uid="uid://doxpn22j1qdbx" path="res://units/knight/range/knight_range.gd" id="1_be3q5"]
 [ext_resource type="Texture2D" uid="uid://b6g2qubp14le6" path="res://age of war sprites/units/knight/range/die/knight_range_die0001.png" id="2_cr2yd"]
+[ext_resource type="PackedScene" uid="uid://df882i3glkoii" path="res://scenes/multiplayer/unit_synchronizer.tscn" id="2_dgmo4"]
 [ext_resource type="Texture2D" uid="uid://cr1r5c47lxi16" path="res://age of war sprites/effects/shadow.png" id="2_px0bt"]
 [ext_resource type="Texture2D" uid="uid://duihpvgrpf64v" path="res://age of war sprites/units/knight/range/die/knight_range_die0002.png" id="3_g5pq8"]
 [ext_resource type="Texture2D" uid="uid://dursl1exen4pm" path="res://age of war sprites/units/knight/range/die/knight_range_die0003.png" id="4_mnica"]
@@ -1313,6 +1314,8 @@ animations = [{
 
 [node name="knight_range" type="RigidBody2D"]
 script = ExtResource("1_be3q5")
+
+[node name="UnitSynchronizer" parent="." instance=ExtResource("2_dgmo4")]
 
 [node name="Shadow" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
