@@ -6,4 +6,6 @@ func _ready():
     audioStreamPlayer = get_node("AudioStreamPlayer")
     if get_node("/root").has_node("main_game"):
         audioStreamPlayer.play()
+    if get_node("/root").has_node("multiplayer_game"):
+        audioStreamPlayer.play()
     audioStreamPlayer.bus = &'Music'

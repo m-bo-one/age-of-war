@@ -137,7 +137,7 @@ func _on_melee_pressed():
 
 
 func _on_range_pressed():
-    _on_troop_pressed("melee", 1.0)
+    _on_troop_pressed("range", 1.0)
 
 
 func _on_tank_pressed():

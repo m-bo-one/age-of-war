@@ -57,44 +57,36 @@ label_settings = ExtResource("3_lix3r")
 horizontal_alignment = 1
 
 [node name="Spacer" type="Control" parent="Panel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 100)
+custom_minimum_size = Vector2(0, 125)
 layout_mode = 2
 
-[node name="NetSelection" type="VBoxContainer" parent="Panel/VBoxContainer"]
-visible = false
-layout_mode = 2
-
-[node name="Spacer" type="Control" parent="Panel/VBoxContainer/NetSelection"]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="BtnLan" parent="Panel/VBoxContainer/NetSelection" instance=ExtResource("5_k6fuu")]
+[node name="BtnLan" parent="Panel/VBoxContainer" instance=ExtResource("5_k6fuu")]
 layout_mode = 2
 text = "LAN"
 show_hover_pointer = true
 dark = true
 
-[node name="SpacerBtn1" type="Control" parent="Panel/VBoxContainer/NetSelection"]
+[node name="Spacer4" type="Control" parent="Panel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 19.885)
 layout_mode = 2
 
-[node name="BtnSteam" parent="Panel/VBoxContainer/NetSelection" instance=ExtResource("5_k6fuu")]
+[node name="BtnSteam" parent="Panel/VBoxContainer" instance=ExtResource("5_k6fuu")]
 layout_mode = 2
 text = "Steam"
 show_hover_pointer = true
 dark = true
 
-[node name="Spacer2" type="Control" parent="Panel/VBoxContainer/NetSelection"]
+[node name="Spacer5" type="Control" parent="Panel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_vertical = 3
 
 [node name="Lan" parent="Panel/VBoxContainer" instance=ExtResource("4_u6dvk")]
+visible = false
 custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
 
-[node name="Spacer2" type="Control" parent="Panel/VBoxContainer"]
+[node name="Spacer6" type="Control" parent="Panel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_vertical = 3
@@ -105,6 +97,6 @@ text = "Click here to return to the menu"
 show_hover_pointer = true
 dark = true
 
-[connection signal="pressed" from="Panel/VBoxContainer/NetSelection/BtnLan" to="." method="_on_btn_lan_pressed"]
-[connection signal="pressed" from="Panel/VBoxContainer/NetSelection/BtnSteam" to="." method="_on_btn_steam_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/BtnLan" to="." method="_on_btn_lan_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/BtnSteam" to="." method="_on_btn_steam_pressed"]
 [connection signal="pressed" from="Panel/VBoxContainer/BtnReturn" to="." method="_on_return_pressed"]
