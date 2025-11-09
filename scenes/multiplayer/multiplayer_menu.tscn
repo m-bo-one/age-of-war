@@ -61,28 +61,31 @@ custom_minimum_size = Vector2(0, 125)
 layout_mode = 2
 
 [node name="BtnLan" parent="Panel/VBoxContainer" instance=ExtResource("5_k6fuu")]
+visible = false
 layout_mode = 2
 text = "LAN"
 show_hover_pointer = true
 dark = true
 
 [node name="Spacer4" type="Control" parent="Panel/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(0, 19.885)
 layout_mode = 2
 
 [node name="BtnSteam" parent="Panel/VBoxContainer" instance=ExtResource("5_k6fuu")]
+visible = false
 layout_mode = 2
 text = "Steam"
 show_hover_pointer = true
 dark = true
 
 [node name="Spacer5" type="Control" parent="Panel/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_vertical = 3
 
 [node name="Lan" parent="Panel/VBoxContainer" instance=ExtResource("4_u6dvk")]
-visible = false
 custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
 

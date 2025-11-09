@@ -1,7 +1,6 @@
 extends multiplayer_unit
 class_name range_unit
 
-@export var is_player_owned: bool = true
 @export var max_health: int
 @export var health: int
 @export var damage: int
@@ -45,12 +44,12 @@ func _ready():
     self.connect("mouse_entered", _on_mouse_entered)
     self.connect("mouse_exited", _on_mouse_exited)
     
-    if is_player_owned == false or player_side == base_side.right:
+    if is_right_side():
         animated_sprite.flip_h = true
         melee_ray_cast.scale.x = -1
         range_ray_cast.scale.x = -1
         z_index = 0
-    elif is_player_owned == true:
+    else:
         animated_sprite.flip_h = false
         melee_ray_cast.scale.x = 1
         range_ray_cast.scale.x = 1
@@ -75,7 +74,7 @@ func _ready():
     gravity_scale = 0
 
     # collide with opposite base
-    if is_player_owned == false or player_side == base_side.right:
+    if is_right_side():
         range_ray_cast.set_collision_mask_value(3, true)
         melee_ray_cast.set_collision_mask_value(3, true)
         self.z_index = 1
@@ -84,10 +83,11 @@ func _ready():
         melee_ray_cast.set_collision_mask_value(4, true)
         self.z_index = 2
         
-    if is_player_owned == false and GlobalVariables.current_difficulty == GlobalVariables.difficulty.hard:
-        health *= 1.25
-    elif is_player_owned == false and GlobalVariables.current_difficulty == GlobalVariables.difficulty.impossible:
-        health *= 1.5
+    if is_ai():
+        if GlobalVariables.current_difficulty == GlobalVariables.difficulty.hard:
+            health *= 1.25
+        elif GlobalVariables.current_difficulty == GlobalVariables.difficulty.impossible:
+            health *= 1.5
         
     max_health = health
     starting_health_bar_size = $Control/health_bar.size.x
@@ -99,10 +99,7 @@ func _process(delta):
     # Check if range_raycast is colliding with friendly unit, if so add it to exceptions
     if (
         range_ray_cast.is_colliding() == true and 
-        (
-            range_ray_cast.get_collider().is_player_owned == is_player_owned and
-            range_ray_cast.get_collider().player_id == player_id
-        )
+        is_player_obj(range_ray_cast.get_collider())
     ):
         range_ray_cast.add_exception_rid(range_ray_cast.get_collider())
     
@@ -130,12 +127,12 @@ func _process(delta):
                 var op_player = LobbyManager.get_opponent_player(player_id)
                 LobbyManager.update_money.rpc_id(op_player.id, op_player.id, money_die_reward)
                 spawn_show_death_money.rpc_id(op_player.id)
-        elif is_player_owned == false:
+        elif is_ai():
+            GlobalVariables.player_exp += int(money_die_reward/2)
+        else:
             GlobalVariables.player_money += money_die_reward
             GlobalVariables.player_exp += 2 * money_die_reward
             spawn_show_death_money()
-        else:
-            GlobalVariables.player_exp += int (money_die_reward/2)
     
     position.y = 570
     $Label.text = str(health)
@@ -149,6 +146,7 @@ func idle_state():
     elif $RayCast2D_melee.is_colliding() == true and not is_melee_enemy() and $RayCast2D_range.is_colliding():
         change_state(state.idle_attack)
 
+
 func idle_attack_state():
     if $RayCast2D_range.is_colliding() == false:
         change_state(state.walk)
@@ -157,7 +155,6 @@ func idle_attack_state():
         change_state(state.walk_attack)
         
     
-
 func melee_attack_state():
     if $RayCast2D_melee.is_colliding() == false and $RayCast2D_range.is_colliding() == true:
         change_state(state.walk_attack)
@@ -167,60 +164,49 @@ func melee_attack_state():
     
 func is_melee_enemy() -> bool:
     var melee_obj = $RayCast2D_melee.get_collider()
-    return (melee_obj.is_player_owned != is_player_owned or melee_obj.player_side != player_side)
+    return not is_player_obj(melee_obj)
     
     
 func is_range_enemy() -> bool:
     var range_obj = $RayCast2D_range.get_collider()
-    return (range_obj.is_player_owned != is_player_owned or range_obj.player_side != player_side)
+    return not is_player_obj(range_obj)
     
 
 func walk_state(delta):
     move(delta)
 
     # First check if it is on the same team, if yes - add it to the exception
-    if $RayCast2D_range.is_colliding() == true and not is_range_enemy():
+    if $RayCast2D_range.is_colliding() and not is_range_enemy():
         $RayCast2D_range.add_exception_rid($RayCast2D_range.get_collider())
-    elif $RayCast2D_range.is_colliding() == true and is_range_enemy():
-        if $RayCast2D_melee.is_colliding() == true and not is_melee_enemy() and ($RayCast2D_melee.get_collider().is_walking_or_walk_attacking()):
+    elif $RayCast2D_range.is_colliding() and is_range_enemy():
+        if $RayCast2D_melee.is_colliding() and not is_melee_enemy() and ($RayCast2D_melee.get_collider().is_walking_or_walk_attacking()):
             change_state(state.walk_attack)
         elif $RayCast2D_melee.is_colliding() == false:
             change_state(state.walk_attack)
             
-        
-        
     if $RayCast2D_melee.is_colliding() == true:
         if is_melee_enemy() and $RayCast2D_melee.get_collider().current_state != $RayCast2D_melee.get_collider().state.die:
             change_state(state.melee_attack)
         elif not is_melee_enemy() and ($RayCast2D_melee.get_collider().is_idle_or_idle_attacking()):
             change_state(state.idle)
 
+
 func walk_attack_state(delta):
     move(delta)
-    
         
     if $RayCast2D_range.is_colliding() == false:
         change_state(state.walk)
 
     if $RayCast2D_melee.is_colliding() == true:
-        if not is_melee_enemy() and $RayCast2D_melee.get_collider().current_state != $RayCast2D_melee.get_collider().state.die:
+        if is_melee_enemy() and $RayCast2D_melee.get_collider().current_state != $RayCast2D_melee.get_collider().state.die:
             change_state(state.melee_attack)
             
-        if is_melee_enemy() and $RayCast2D_melee.get_collider().is_idle_or_idle_attacking():
+        if not is_melee_enemy() and $RayCast2D_melee.get_collider().is_idle_or_idle_attacking():
             change_state(state.idle_attack)
-    
-    
-
-
-
-
-
-
-
 
 
 func move(delta):
-    if is_player_owned == false or player_side == base_side.right:
+    if is_right_side():
         move_and_collide(Vector2.LEFT * move_speed * delta)
     else:
         move_and_collide(Vector2.RIGHT * move_speed * delta)

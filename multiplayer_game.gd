@@ -8,7 +8,7 @@ extends Node2D
 @onready var player_2_base = $player_2_base
 
 var unit_array : Array
-var unable_to_spawn
+var unable_to_spawn: Dictionary[int, bool]
 var medival_special_active : bool
 
 var main_node_path: String = "/root/multiplayer_game"
@@ -28,7 +28,7 @@ func _ready():
     $Camera2D/in_game_menu.connect("spawn_range", _on_range_button_pressed)
     $Camera2D/in_game_menu.connect("spawn_tank", _on_tank_button_pressed)
     $Camera2D/in_game_menu.connect("spawn_super_soldier", _on_super_soldier_button_pressed)
-    unable_to_spawn = false
+    unable_to_spawn = {}
     medival_special_active = false
     
     
@@ -53,6 +53,17 @@ func _process(delta):
                 sprite.scale = Vector2(0.8, 0.8)
                 sprite.name = "heal_sprite"
                 unit.add_child(sprite)
+                
+                
+func is_spawnable() -> bool:
+    var id = multiplayer.get_unique_id()
+    if not unable_to_spawn.has(id):
+        return true
+    return not unable_to_spawn[id]
+    
+    
+func set_unable_to_spawn(id: int, res: bool) -> void:
+    unable_to_spawn[id] = res
 
 
 func get_first_player_unit():
@@ -70,7 +81,7 @@ func get_last_enemy_unit():
     
 
 @rpc("any_peer", "call_local")
-func playr_spawn_flash(base_side: LobbyManager.BaseSide):
+func spawn_location_flash(base_side: LobbyManager.BaseSide):
     var player_spawn_location: Area2D
 
     if base_side == LobbyManager.BaseSide.LEFT:
@@ -110,41 +121,43 @@ func create_player_unit(id: int, path: String):
     }
     spawner.spawn(data)
     
-    playr_spawn_flash.rpc(player.base_side)
+    spawn_location_flash.rpc(player.base_side)
     
 # NOTE: stage should be from server
 
 func _on_melee_button_pressed(stage: String):
-    if unable_to_spawn == true:
+    if not is_spawnable():
         return
-        
     create_player_unit(multiplayer.get_unique_id(), "res://units/" + stage + "/melee/" + stage + "_melee.tscn")
 
 func _on_range_button_pressed(stage: String):
-    if unable_to_spawn == true:
+    if not is_spawnable():
         return
     create_player_unit(multiplayer.get_unique_id(), "res://units/" + stage + "/range/" + stage + "_range.tscn")
 
 func _on_tank_button_pressed(stage: String):
-    if unable_to_spawn == true:
+    if not is_spawnable():
         return
     create_player_unit(multiplayer.get_unique_id(), "res://units/" + stage + "/tank/" + stage + "_tank.tscn")
     
 # Unused variable stage in this function
 func _on_super_soldier_button_pressed(stage: String):
-    if unable_to_spawn == true:
+    if not is_spawnable():
         return
     create_player_unit(multiplayer.get_unique_id(), "res://units/future/super_soldier/future_super_soldier.tscn")
 
 
 func _on_player_spawn_location_body_entered(body):
     if body.is_player_owned == true:
-        unable_to_spawn = true
+        print("[PEER]=", multiplayer.get_unique_id(), " - _on_player_spawn_location_body_entered: ", body.name)
+        set_unable_to_spawn(body.player_id, true)
 
 
 func _on_player_spawn_location_body_exited(body):
     if body.is_player_owned == true:
-        unable_to_spawn = false
+        print("[PEER]=", multiplayer.get_unique_id(), " - _on_player_spawn_location_body_exited: ", body.name)
+        set_unable_to_spawn(body.player_id, false)
+
     
 func spawn_random_projectiles_from_sky():
     var i = 0

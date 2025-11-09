@@ -19,7 +19,7 @@ func _ready():
     
     
     super()
-    if is_player_owned == false:
+    if is_player_owned == false or player_side == base_side.right:
         $Shadow.position.x = -$Shadow.position.x
     
     

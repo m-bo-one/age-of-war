@@ -1,7 +1,6 @@
 extends multiplayer_unit
 class_name melee_unit
 
-@export var is_player_owned: bool = true
 @export var max_health: int
 @export var health: int
 @export var damage: int
@@ -50,11 +49,11 @@ func _ready():
     self.connect("mouse_exited", _on_mouse_exited)
     
     
-    if is_player_owned == false or player_side == base_side.right:
+    if is_right_side():
         animated_sprite.flip_h = true
         melee_ray_cast.scale.x = -1
         z_index = 0
-    elif is_player_owned == true:
+    else:
         animated_sprite.flip_h = false
         melee_ray_cast.scale.x = 1
         z_index = 1
@@ -76,16 +75,18 @@ func _ready():
     lock_rotation = true
     
     gravity_scale = 0
-    if is_player_owned == false or player_side == base_side.right:
+    if is_right_side():
         melee_ray_cast.set_collision_mask_value(3, true)
         self.z_index = 1
     else:
         melee_ray_cast.set_collision_mask_value(4, true)
         self.z_index = 2
-    if is_player_owned == false and GlobalVariables.current_difficulty == GlobalVariables.difficulty.hard:
-        health *= 1.25
-    elif is_player_owned == false and GlobalVariables.current_difficulty == GlobalVariables.difficulty.impossible:
-        health *= 1.5
+        
+    if is_ai():
+        if GlobalVariables.current_difficulty == GlobalVariables.difficulty.hard:
+            health *= 1.25
+        elif GlobalVariables.current_difficulty == GlobalVariables.difficulty.impossible:
+            health *= 1.5
         
     max_health = health
     starting_health_bar_size = $Control/health_bar.size.x
@@ -114,18 +115,17 @@ func _process(delta):
         stop_all_sfx()
         die_sfx.play()
     
-        
         if player_id != 0:
             if multiplayer.is_server():
                 var op_player = LobbyManager.get_opponent_player(player_id)
                 LobbyManager.update_money.rpc_id(op_player.id, op_player.id, money_die_reward)
                 spawn_show_death_money.rpc_id(op_player.id)
-        elif is_player_owned == false:
+        elif is_ai():
+            GlobalVariables.player_exp += int(money_die_reward/2)
+        else:
             GlobalVariables.player_money += money_die_reward
             GlobalVariables.player_exp += 2 * money_die_reward
             spawn_show_death_money()
-        else:
-            GlobalVariables.player_exp += int (money_die_reward/2)
 
     position.y = 570
     $Label.text = str(health)
@@ -147,21 +147,18 @@ func take_damage(outside_damage):
 func do_damage(unit_to_be_damaged):
     unit_to_be_damaged.take_damage(damage)
 
-func is_idle_or_idle_attacking():
-    if current_state == state.idle or current_state == state.attack:
-        return true
-    else:
-        return false
+func is_idle_or_idle_attacking() -> bool:
+    return current_state == state.idle or current_state == state.attack
 
-func is_walking_or_walk_attacking():
-    if current_state == state.walk:
-        return true
-    else:
-        return false
+
+func is_walking_or_walk_attacking() -> bool:
+    return current_state == state.walk
+        
         
 func is_enemy():
     var collider_obj = $RayCast2D.get_collider()
-    return (collider_obj.is_player_owned != is_player_owned or collider_obj.player_side != player_side)
+    return not is_player_obj(collider_obj)
+
 
 func move_state(delta):
     if $RayCast2D.is_colliding() == true:
@@ -170,13 +167,10 @@ func move_state(delta):
         elif not is_enemy() and ($RayCast2D.get_collider().is_idle_or_idle_attacking()):
             change_state(state.idle)
     else:
-        if is_player_owned == true:
-            if player_side == base_side.left:
-                move_and_collide(Vector2.RIGHT * move_speed * delta)
-            else:
-                move_and_collide(Vector2.LEFT * move_speed * delta)
-        elif is_player_owned == false:
+        if is_right_side():
             move_and_collide(Vector2.LEFT * move_speed * delta)
+        else:
+            move_and_collide(Vector2.RIGHT * move_speed * delta)
 
 func idle_state():
     # There is a friendly unit infront of us, There is not too much we can do until the unit infront of us moves

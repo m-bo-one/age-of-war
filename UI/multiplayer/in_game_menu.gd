@@ -28,7 +28,7 @@ func _process(delta):
     if queue.size() != 0 and loading_unit == false:
         loading_unit = true
         load_first_unit_in_queue()
-    if queue.size() != 0 and loading_unit == true and get_node(main_node_path).unable_to_spawn == false and load_finish == true:
+    if queue.size() != 0 and loading_unit == true and get_node(main_node_path).is_spawnable() and load_finish == true:
         _tween_queue_finished(queue[0][0], queue[0][2])
     if loading_unit == true and load_finish == true:
         $sublabel_queue.text = "Waiting for space"
@@ -85,7 +85,9 @@ func update_sprites_with_age():
 
 func add_to_queue(type: String, load_time: float, stage: String):
     if queue.size() >= 5:
+        print("[PEER]=", multiplayer.get_unique_id(), " - spawn queue full: ", queue.size())
         return
+    print("[PEER]=", multiplayer.get_unique_id(), " - adding to spawn queue: ", [type, load_time, stage])
     queue.append([type, load_time, stage])
 
 func load_first_unit_in_queue():
@@ -111,7 +113,7 @@ func queue_load(time, unit: String):
 
 
 func _tween_queue_finished(unit: String, stage: String):
-    if get_node(main_node_path).unable_to_spawn == false:
+    if get_node(main_node_path).is_spawnable():
         emit_signal("spawn_" + unit, stage)
         $queue/ColorRect7.size.x = 0
         loading_unit = false
@@ -126,7 +128,7 @@ func _on_troop_pressed(type: String, load_time: float) -> void:
         if queue.size() < 5:
             LobbyManager.deduct_money(multiplayer.get_unique_id(), type)
             var stage = GlobalVariables.get_age_as_string(GlobalVariables.current_stage)
-            add_to_queue(type, 0.5, stage)
+            add_to_queue(type, load_time, stage)
     else:
         $units_menu/Label.show()
         $units_menu/Label.text = "Not enough money!"
@@ -203,31 +205,42 @@ func update_queue_hud():
         $queue/HBoxContainer/ColorRect3.show()
         $queue/HBoxContainer/ColorRect4.show()
         $queue/HBoxContainer/ColorRect5.show()
-
-
-func _on_melee_mouse_entered():
+        
+        
+func show_units_info(unit: String):
     # display melee cost and name
     $units_menu/Label.show()
-    $units_menu/Label.text = "${price} - {unit}".format({"price" : GlobalVariables.get_unit_cost("melee", GlobalVariables.current_stage),
-                                                        "unit" : GlobalVariables.get_unit_name("melee", GlobalVariables.get_current_age_as_string())})
+    $units_menu/Label.text = "${price} - {unit}".format({"price" : GlobalVariables.get_unit_cost(unit, GlobalVariables.current_stage),
+                                                         "unit" : GlobalVariables.get_unit_name(unit, GlobalVariables.get_current_age_as_string())})
 
 
-func _on_unit_button_mouse_exited():
+func hide_units_info():
     # hide text
     $units_menu/Label.hide()
     $units_menu/Label.text = ""
 
 
+func _on_melee_mouse_entered():
+    show_units_info("melee")
+
+
+func _on_unit_button_mouse_exited():
+    hide_units_info()
+
+
 func _on_range_mouse_entered():
-    $units_menu/Label.show()
-    $units_menu/Label.text = "${price} - {unit}".format({"price" : GlobalVariables.get_unit_cost("range", GlobalVariables.current_stage),
-                                                        "unit" : GlobalVariables.get_unit_name("range", GlobalVariables.get_current_age_as_string())})
+    show_units_info("range")
 
 
 func _on_tank_mouse_entered():
-    $units_menu/Label.show()
-    $units_menu/Label.text = "${price} - {unit}".format({"price" : GlobalVariables.get_unit_cost("tank", GlobalVariables.current_stage),
-                                                        "unit" : GlobalVariables.get_unit_name("tank", GlobalVariables.get_current_age_as_string())})
+    show_units_info("tank")
+    
+    
+func _on_special_mouse_entered():
+    if GlobalVariables.current_stage != GlobalVariables.stage.future:
+        return
+        
+    show_units_info("super_soldier")
 
 
 func _on_unit_mouse_entered():
@@ -252,15 +265,5 @@ func _on_advance_mouse_entered():
         $root_label.text = "{exp} Xp - Evolve to next age".format({"exp": GlobalVariables.get_exp_to_next_age()})
 
 
-
-func _on_special_mouse_entered():
-    if GlobalVariables.current_stage != GlobalVariables.stage.future:
-        return
-    $units_menu/Label.show()
-    $units_menu/Label.text = "${price} - {unit}".format({"price" : 150000,
-                                                        "unit" : "super soldier"})
-
-
 func _on_special_mouse_exited():
-    $units_menu/Label.hide()
-    $units_menu/Label.text = ""
+    hide_units_info()

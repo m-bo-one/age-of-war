@@ -36,7 +36,7 @@ func reset() -> void:
 func reset_for_multi() -> void:
     current_stage = stage.cave
     player_exp = 0
-    player_money = 500
+    player_money = 5000
 
 
 func load_config() -> void:
@@ -129,7 +129,7 @@ func get_unit_name(unit_type: String, input_stage):
         elif unit_type == "tank":
             return "War Machine"
         elif unit_type == "super_soldier":
-            return "super soldier"
+            return "Super Soldier"
 
 func get_unit_cost(unit_type: String, input_stage: stage):
     if input_stage == stage.cave:

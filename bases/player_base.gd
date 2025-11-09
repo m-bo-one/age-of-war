@@ -1,9 +1,15 @@
 extends StaticBody2D
 
-@export var is_player_owned: bool = true
+enum base_side {left = 1, right}
 
-var health
-var max_health
+@export var is_player_owned: bool = true
+@export var health: int
+@export var max_health: int
+@export var player_id: int = 0:
+    set(id):
+        player_id = id
+@export var player_side: base_side = base_side.left
+
 var turret_array : Array
 var turret_data : Array
 

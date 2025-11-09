@@ -1,17 +1,17 @@
-extends MultiplayerSynchronizer
+extends Control
 
 
-@onready var sync = $MultiplayerSynchronizer
+@onready var sync: MultiplayerSynchronizer = $MultiplayerSynchronizer
 
 
 func _ready() -> void:
-    root_path = ".."
-    replication_interval = 0.1
+    sync.root_path = "..."
+    sync.replication_interval = 0.1
     
     if not multiplayer.has_multiplayer_peer():
         return
     
-    var conf: SceneReplicationConfig = replication_config
+    var conf: SceneReplicationConfig = sync.replication_config
     
     var init_props = [
         ".:position",
