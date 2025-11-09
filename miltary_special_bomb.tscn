@@ -1,6 +1,6 @@
 [gd_scene load_steps=34 format=3 uid="uid://de8vnaploinaf"]
 
-[ext_resource type="Script" path="res://miltary_special_bomb.gd" id="1_ki1jl"]
+[ext_resource type="Script" uid="uid://c77dsssls5joi" path="res://miltary_special_bomb.gd" id="1_ki1jl"]
 [ext_resource type="Texture2D" uid="uid://drxwftp1ycjik" path="res://age of war sprites/effects/knight_special_arrow/knight_special_arrow0001.png" id="2_vh7qq"]
 [ext_resource type="Texture2D" uid="uid://bfkv6nlwdmxsk" path="res://age of war sprites/effects/knight_special_arrow/knight_special_arrow0002.png" id="3_gcq7v"]
 [ext_resource type="Texture2D" uid="uid://4lbrfhu1v4mw" path="res://age of war sprites/effects/knight_special_arrow/knight_special_arrow0003.png" id="4_hnbmg"]

@@ -1,10 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://btdno6n3uafxs"]
+[gd_scene load_steps=3 format=3 uid="uid://btdno6n3uafxs"]
 
-[ext_resource type="Script" path="res://future_special_laser_attack.gd" id="1_e6ue8"]
+[ext_resource type="Script" uid="uid://3awwl60lcrvc" path="res://future_special_laser_attack.gd" id="1_e6ue8"]
 
-[node name="future_special_laser_attack" type="Node2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_up6o7"]
+radius = 1.0
+
+[node name="future_special_laser_attack" type="Area2D"]
 script = ExtResource("1_e6ue8")
 
 [node name="Timer" type="Timer" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_up6o7")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

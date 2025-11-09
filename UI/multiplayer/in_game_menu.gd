@@ -23,7 +23,7 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
     update_queue_hud()
     if queue.size() != 0 and loading_unit == false:
         loading_unit = true
@@ -52,20 +52,25 @@ func _on_back_pressed():
         current_menu = menu.root
         $default_menu/root_hbox_container.show()
         $units_menu.hide()
+        
+        
+func advance_age():
+    GlobalVariables.current_stage += 1
+    update_sprites_with_age()
+    var player = LobbyManager.get_active_player()
+    var base_node = get_node(main_node_path + "/player_" + str(player.base_side) + "_base")
+    base_node.advance_base_sprite.rpc(GlobalVariables.current_stage)
+    if GlobalVariables.current_stage == GlobalVariables.stage.future:
+        $units_menu/HBoxContainer/special.disabled = false
 
 
 func _on_advance_pressed():
-    if GlobalVariables.player_exp >= GlobalVariables.get_exp_to_next_age():
-        GlobalVariables.current_stage += 1
-        update_sprites_with_age()
-        var player = LobbyManager.get_active_player()
-        var base_node = get_node(main_node_path + "/player_" + str(player.base_side) + "_base")
-        base_node.advance_base_sprite.rpc(GlobalVariables.current_stage)
-        if GlobalVariables.current_stage == GlobalVariables.stage.future:
-            $units_menu/HBoxContainer/special.disabled = false
-    else:
-        $root_label.show()
-        $root_label.text = "Not enough XP!"
+    advance_age()
+    #if GlobalVariables.player_exp >= GlobalVariables.get_exp_to_next_age():
+        #advance_age()
+    #else:
+        #$root_label.show()
+        #$root_label.text = "Not enough XP!"
 
 
 func update_sprites_with_age():
@@ -249,6 +254,7 @@ func _on_unit_mouse_entered():
     
     
 func _on_unit_mouse_exited():
+    $root_label.hide()
     $root_label.text = ""
 
 
@@ -263,6 +269,10 @@ func _on_advance_mouse_entered():
         $root_label.text = "Already at max age!"
     else:
         $root_label.text = "{exp} Xp - Evolve to next age".format({"exp": GlobalVariables.get_exp_to_next_age()})
+
+
+func _on_advance_mouse_exited() -> void:
+    _on_unit_mouse_exited()
 
 
 func _on_special_mouse_exited():

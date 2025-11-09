@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://jiyawnwdsryv"]
+[gd_scene load_steps=15 format=3 uid="uid://jiyawnwdsryv"]
 
 [ext_resource type="Script" uid="uid://dolu71oee334m" path="res://multiplayer_game.gd" id="1_psj0n"]
 [ext_resource type="Texture2D" uid="uid://bk20tm6uudxsk" path="res://age of war sprites/bg/background.png" id="2_4o0n6"]
@@ -23,6 +23,43 @@ size = Vector2(50, 20)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1lruk"]
 size = Vector2(2131, 22)
 
+[sub_resource type="GDScript" id="GDScript_vchp7"]
+script/source = "extends MultiplayerSpawner
+
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+    spawn_function = _on_projectile_spawn
+
+
+func _on_projectile_spawn(data: Dictionary) -> Node:
+    #print(\"_on_projectile_spawn\", data)
+    var projectile = load(data.path).instantiate()
+    projectile.player_id = data.player_id
+    projectile.player_side = data.player_side
+    projectile.is_player_owned = data.is_player_owned
+    if \"global_position\" in data:
+        projectile.global_position = data.global_position
+    if \"direction\" in data:
+        projectile.direction = data.direction
+    if \"damage\" in data:
+        projectile.damage = data.damage
+    if \"speed\" in data:
+        projectile.speed = data.speed
+    if \"spawn_offspring\" in data:
+        projectile.spawn_offspring = data.spawn_offspring
+    if \"time_to_die\" in data:
+        projectile.time_to_die = data.time_to_die
+    if \"sprite\" in data:
+        projectile.get_node(\"Sprite2D\").rotation = data.sprite.rotation
+    if \"particles\" in data:
+        projectile.get_node(\"CPUParticles2D\").direction = data.particles.direction
+
+    #print(\"[PEER]=\", multiplayer.get_unique_id(), \" - projectile spawn: \", data)
+    return projectile
+"
+
 [node name="multiplayer_game" type="Node2D"]
 script = ExtResource("1_psj0n")
 
@@ -44,6 +81,7 @@ texture = ExtResource("2_4o0n6")
 metadata/_edit_lock_ = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
+z_index = 1
 position = Vector2(550, 280)
 script = ExtResource("3_euiar")
 scroll_speed = 800
@@ -163,7 +201,9 @@ script = ExtResource("10_vchp7")
 spawn_path = NodePath("../player_2_units")
 script = ExtResource("10_vchp7")
 
-[node name="medival_special_timer" type="Timer" parent="."]
+[node name="special_projectile_multi_spawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("..")
+script = SubResource("GDScript_vchp7")
 
 [connection signal="mouse_entered" from="Camera2D/right_box" to="Camera2D" method="_on_mouse_camera_move_right_mouse_entered"]
 [connection signal="mouse_exited" from="Camera2D/right_box" to="Camera2D" method="stop_camera_moving"]
@@ -174,4 +214,3 @@ script = ExtResource("10_vchp7")
 [connection signal="body_exited" from="player_1_spawn_location" to="." method="_on_player_spawn_location_body_exited"]
 [connection signal="body_entered" from="player_2_spawn_location" to="." method="_on_player_spawn_location_body_entered"]
 [connection signal="body_exited" from="player_2_spawn_location" to="." method="_on_player_spawn_location_body_exited"]
-[connection signal="timeout" from="medival_special_timer" to="." method="_on_medival_special_timer_timeout"]

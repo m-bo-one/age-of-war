@@ -154,10 +154,12 @@ func medival_special_attack():
 func miltary_special_attack():
     var plane = load("res://miltary_special_plane.tscn").instantiate()
     plane.global_position = Vector2(-100, 150)
+    plane.is_player_owned = true
     get_node("/root/main_game").add_child(plane)
 
 func future_special_attack():
     var laser = load("res://future_special_laser_attack.tscn").instantiate()
+    laser.is_player_owned = true
     get_node("/root/main_game").add_child(laser)
     
 

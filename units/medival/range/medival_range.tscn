@@ -1361,7 +1361,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jdsmo"]
-size = Vector2(68, 128)
+size = Vector2(55.75, 102)
 
 [node name="medival_range" type="RigidBody2D"]
 gravity_scale = 0.0
@@ -1374,22 +1374,22 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("299_mkk7i")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(-16, -63)
-scale = Vector2(0.5, 0.5)
+position = Vector2(15.429986, -51.326107)
+scale = Vector2(0.3960443, 0.39604428)
 sprite_frames = SubResource("SpriteFrames_dm7mp")
-animation = &"die"
+animation = &"walk"
 autoplay = "walk"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -64)
+position = Vector2(0, -51)
 shape = SubResource("RectangleShape2D_jdsmo")
 
 [node name="RayCast2D_melee" type="RayCast2D" parent="."]
-position = Vector2(0, -64)
+position = Vector2(0, -51)
 target_position = Vector2(41, 0)
 
 [node name="RayCast2D_range" type="RayCast2D" parent="."]
-position = Vector2(0, -64)
+position = Vector2(0, -51)
 target_position = Vector2(270, 0)
 
 [node name="death_timer" type="Timer" parent="."]

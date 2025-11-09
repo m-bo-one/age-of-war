@@ -25,6 +25,16 @@ func _on_unit_spawn(data: Dictionary) -> Node:
         unit.position.x += 32
     
     unit.player_side = data.base_side
+    
+    # adding for medieval special
+    var sprite = Sprite2D.new()
+    sprite.name = "heal_sprite"
+    sprite.texture = load("res://age of war sprites/effects/heal/medival_special_heal.png")
+    sprite.offset = Vector2(0, -74)
+    sprite.scale = Vector2(0.8, 0.8)
+    sprite.visible = false
+    
+    unit.add_child(sprite)
         
     print("[PEER]=", multiplayer.get_unique_id(), " - unit spawn: ", data)
 

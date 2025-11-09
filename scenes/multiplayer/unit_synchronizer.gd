@@ -1,25 +1,24 @@
-extends Control
-
-
-@onready var sync: MultiplayerSynchronizer = $MultiplayerSynchronizer
+extends MultiplayerSynchronizer
 
 
 func _ready() -> void:
-    sync.root_path = "..."
-    sync.replication_interval = 0.1
+    root_path = ".."
+    replication_interval = 0.1
     
     if not multiplayer.has_multiplayer_peer():
         return
     
-    var conf: SceneReplicationConfig = sync.replication_config
+    var conf: SceneReplicationConfig = replication_config
     
     var init_props = [
         ".:position",
         ".:health",
+        ".:max_health",
         ".:damage",
         "AnimatedSprite2D:animation",
         "AnimatedSprite2D:flip_h",
         "AnimatedSprite2D:frame",
+        "heal_sprite:visible"
     ]
     
     for prop in init_props:

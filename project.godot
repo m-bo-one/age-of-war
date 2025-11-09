@@ -23,6 +23,7 @@ MusicManager="*res://globals/music_manager.tscn"
 GlobalVariables="*res://globals/global_variables.gd"
 NetworkManager="*res://scripts/network/network_manager.gd"
 LobbyManager="*res://scripts/network/lobby_manager.gd"
+SignalBus="*res://scripts/network/signal_bus.gd"
 
 [display]
 

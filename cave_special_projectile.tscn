@@ -1,6 +1,6 @@
-[gd_scene load_steps=36 format=3 uid="uid://ciqbtq7y6ep6y"]
+[gd_scene load_steps=37 format=3 uid="uid://ciqbtq7y6ep6y"]
 
-[ext_resource type="Script" path="res://cave_special_projectile.gd" id="1_c62pa"]
+[ext_resource type="Script" uid="uid://dqhe0foufpcd6" path="res://cave_special_projectile.gd" id="1_c62pa"]
 [ext_resource type="Texture2D" uid="uid://bs5jqltnpvt3t" path="res://age of war sprites/effects/fire_trail.png" id="1_jl2rg"]
 [ext_resource type="Texture2D" uid="uid://b57y8hbyxg1na" path="res://age of war sprites/effects/cave_special_projectile/cave_special_projectile0001.png" id="3_3tb6g"]
 [ext_resource type="Texture2D" uid="uid://dcnsi731lrg2n" path="res://age of war sprites/effects/cave_special_projectile/cave_special_projectile0002.png" id="4_esy2h"]
@@ -137,6 +137,26 @@ animations = [{
 "speed": 30.0
 }]
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_domi5"]
+properties/0/path = NodePath(".:speed")
+properties/0/spawn = true
+properties/0/replication_mode = 0
+properties/1/path = NodePath(".:damage")
+properties/1/spawn = true
+properties/1/replication_mode = 0
+properties/2/path = NodePath("Sprite2D:animation")
+properties/2/spawn = true
+properties/2/replication_mode = 0
+properties/3/path = NodePath("Sprite2D:flip_h")
+properties/3/spawn = true
+properties/3/replication_mode = 0
+properties/4/path = NodePath("Sprite2D:flip_v")
+properties/4/spawn = true
+properties/4/replication_mode = 0
+properties/5/path = NodePath(".:position")
+properties/5/spawn = true
+properties/5/replication_mode = 0
+
 [node name="cave_special_projectile" type="Area2D"]
 script = ExtResource("1_c62pa")
 
@@ -169,3 +189,7 @@ autoplay = "default"
 frame = 5
 frame_progress = 0.2502
 offset = Vector2(-42.225, 0)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_interval = 0.1
+replication_config = SubResource("SceneReplicationConfig_domi5")

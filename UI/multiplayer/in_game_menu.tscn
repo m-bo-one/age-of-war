@@ -452,7 +452,7 @@ texture = ExtResource("15_5wqb0")
 [connection signal="mouse_exited" from="default_menu/root_hbox_container/unit" to="." method="_on_unit_mouse_exited"]
 [connection signal="pressed" from="default_menu/root_hbox_container/unit" to="." method="_on_unit_pressed"]
 [connection signal="mouse_entered" from="default_menu/root_hbox_container/advance" to="." method="_on_advance_mouse_entered"]
-[connection signal="mouse_exited" from="default_menu/root_hbox_container/advance" to="." method="_on_back_mouse_exited_from_turret"]
+[connection signal="mouse_exited" from="default_menu/root_hbox_container/advance" to="." method="_on_advance_mouse_exited"]
 [connection signal="pressed" from="default_menu/root_hbox_container/advance" to="." method="_on_advance_pressed"]
 [connection signal="mouse_entered" from="units_menu/HBoxContainer/melee" to="." method="_on_melee_mouse_entered"]
 [connection signal="mouse_exited" from="units_menu/HBoxContainer/melee" to="." method="_on_unit_button_mouse_exited"]

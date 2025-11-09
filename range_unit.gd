@@ -1,10 +1,6 @@
 extends multiplayer_unit
 class_name range_unit
 
-@export var max_health: int
-@export var health: int
-@export var damage: int
-
 var move_speed
 var starting_health_bar_size
 
@@ -96,6 +92,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+    super(delta)
     # Check if range_raycast is colliding with friendly unit, if so add it to exceptions
     if (
         range_ray_cast.is_colliding() == true and 
@@ -115,7 +112,6 @@ func _process(delta):
         walk_state(delta)
     elif current_state == state.walk_attack:
         walk_attack_state(delta)
-        
     
     if health <= 0 and current_state != state.die:
         change_state(state.die)
@@ -245,9 +241,6 @@ func stop_all_sfx():
     for child in get_node("sfx").get_children():
         child.stop()
 
-func take_damage(outside_damage):
-    health -= outside_damage
-    $Control/health_bar.size.x = 48 * health / max_health
 
 func do_damage(unit_to_be_damaged):
     unit_to_be_damaged.take_damage(damage)

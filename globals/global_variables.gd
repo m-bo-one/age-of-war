@@ -36,7 +36,7 @@ func reset() -> void:
 func reset_for_multi() -> void:
     current_stage = stage.cave
     player_exp = 0
-    player_money = 5000
+    player_money = 500
 
 
 func load_config() -> void:

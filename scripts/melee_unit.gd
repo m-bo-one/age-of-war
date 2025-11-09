@@ -1,10 +1,6 @@
 extends multiplayer_unit
 class_name melee_unit
 
-@export var max_health: int
-@export var health: int
-@export var damage: int
-
 var multiple_attack_animations: bool = false # default to false
 var custom_death_sfx = null
 var damage_frame
@@ -96,6 +92,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+    super(delta)
+
     if current_state == state.walk:
         move_state(delta)
     elif current_state == state.attack:
@@ -120,6 +118,7 @@ func _process(delta):
                 var op_player = LobbyManager.get_opponent_player(player_id)
                 LobbyManager.update_money.rpc_id(op_player.id, op_player.id, money_die_reward)
                 spawn_show_death_money.rpc_id(op_player.id)
+                print("[PEER]=", multiplayer.get_unique_id(), " - update player money: id - ", op_player.id)
         elif is_ai():
             GlobalVariables.player_exp += int(money_die_reward/2)
         else:
@@ -130,22 +129,22 @@ func _process(delta):
     position.y = 570
     $Label.text = str(health)
     
+    
 @rpc("any_peer", "call_local")
 func spawn_show_death_money():
     var effect = load("res://show_death_money.tscn").instantiate()
     effect.global_position = $Control.global_position
     effect.get_node("Label").text = " +" + str(money_die_reward)
-    get_parent().add_child(effect)
+    get_parent().call_deferred("add_child", effect)
+
 
 func attack_state():
     pass
 
-func take_damage(outside_damage):
-    health -= outside_damage
-    $Control/health_bar.size.x = 48 * health / max_health
     
 func do_damage(unit_to_be_damaged):
     unit_to_be_damaged.take_damage(damage)
+
 
 func is_idle_or_idle_attacking() -> bool:
     return current_state == state.idle or current_state == state.attack

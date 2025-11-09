@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cj1cux0f21ydv"]
 
-[ext_resource type="Script" path="res://projectile_miltary_special_bomb.gd" id="1_m0abt"]
+[ext_resource type="Script" uid="uid://c23ahbkn6eyrt" path="res://projectile_miltary_special_bomb.gd" id="1_m0abt"]
 [ext_resource type="Texture2D" uid="uid://ch4p21intdmt2" path="res://age of war sprites/effects/miltary_special_plane_bomb.png" id="2_hqcv8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n628l"]

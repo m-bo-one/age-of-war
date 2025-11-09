@@ -8,6 +8,7 @@ var base_side: int
 var money: int = GlobalVariables.player_money
 var stage: int = GlobalVariables.stage.cave
 var exp: int = GlobalVariables.player_exp
+var is_mass_heal_active: bool
 
 
 func _init(id: int, name: String, base_side: int) -> void:
@@ -21,4 +22,5 @@ func to_dict() -> Dictionary:
         "id": self.id,
         "name": self.name,
         "base_side": self.base_side,
+        "is_mass_heal_active": self.is_mass_heal_active,
     }

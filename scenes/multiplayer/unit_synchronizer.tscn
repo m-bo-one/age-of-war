@@ -4,10 +4,6 @@
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_6m050"]
 
-[node name="UnitSynchronizer" type="Control"]
-layout_mode = 3
-anchors_preset = 0
-script = ExtResource("1_6m050")
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+[node name="UnitSynchronizer" type="MultiplayerSynchronizer"]
 replication_config = SubResource("SceneReplicationConfig_6m050")
+script = ExtResource("1_6m050")

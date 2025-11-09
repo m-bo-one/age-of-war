@@ -6,11 +6,12 @@ enum BaseSide {LEFT = 1, RIGHT}
 
 
 signal on_lobby_status_update(status: Status)
+signal on_player_update(id: int)
 
 
 const Player = preload("res://scripts/network/player.gd")
 
-var _active_player: Player = null
+var _active_player_id: int
 var _players: Array[Player] = [null, null]
 var _player_pos: Dictionary[int, int] = {}
 # max capacity for lobby
@@ -27,6 +28,16 @@ func get_player(id: int) -> Player:
         return null
         
     return _players[_player_pos[id]]
+    
+    
+@rpc("authority")
+func add_player(data: Dictionary) -> void:
+    if multiplayer.is_server():
+        return
+
+    print("[PEER]=", multiplayer.get_unique_id(), " - add player in player list: ", data.id)
+    _players[data.base_side - 1] = Player.new(data.id, data.name, data.base_side)
+    _player_pos[data.id] = data.base_side - 1
     
     
 func get_opponent_player(id: int) -> Player:
@@ -66,6 +77,9 @@ func try_start() -> bool:
     if not is_full():
         return false
         
+    for player in _players:
+        add_player.rpc(player.to_dict())
+        
     send_status_info.rpc(Status.START)
     
     return true
@@ -84,17 +98,37 @@ func send_status_info(status: Status) -> void:
     
     
 func get_active_player() -> Player:
-    return _active_player
+    return get_player(_active_player_id)
     
     
 @rpc("any_peer")
-func set_active_player(data: Dictionary) -> void:
-    print("[PEER]=", multiplayer.get_unique_id(), " - active player set: ", data.id)
-    _active_player = Player.new(data.id, data.name, data.base_side)
+func set_active_player(id: int) -> void:
+    print("[PEER]=", multiplayer.get_unique_id(), " - active player set: ", id)
+    _active_player_id = id
+    
+    
+@rpc("any_peer", "call_local")
+func update_player(data: Dictionary) -> void:
+    print("[PEER]=", multiplayer.get_unique_id(), " - player update: ", data)
+    if multiplayer.get_remote_sender_id() != 1:
+        print("[PEER]=", multiplayer.get_unique_id(), " - player update err: not valid sender")
+        return
+
+    if not data.has("id"):
+        return
+
+    var player = get_player(data.id)
+    
+    for prop in data:
+        player[prop] = data[prop]
+    
+    print("[PEER]=", multiplayer.get_unique_id(), " - player update: ", data)
+    on_player_update.emit(data.id)
 
 
 @rpc("any_peer")
 func join(id: int, name: String) -> void:
+    # should be executed only on server
     if is_full():
         return
         
@@ -112,9 +146,9 @@ func join(id: int, name: String) -> void:
     
     if multiplayer.is_server():
         if id != 1:
-            set_active_player.rpc_id(id, player.to_dict())
+            set_active_player.rpc_id(id, player.id)
         else:
-            set_active_player(player.to_dict())
+            set_active_player(player.id)
     
 
 @rpc("any_peer")
@@ -150,3 +184,15 @@ func deduct_money(id: int, type: String) -> void:
     #deduct_money_local(id, type)
     #player.money = GlobalVariables.player_money
     #deduct_money_local.rpc_id(id, id, type)
+    
+
+
+## Mass heal activate
+@rpc("any_peer", "call_local")
+func set_mass_heal_special(id: int, state: bool) -> void:
+    if not multiplayer.is_server():
+        return
+    
+    print("[PEER]=", multiplayer.get_unique_id(), " - mass heal status update: ", state, " for: ", id)
+    
+    update_player.rpc({"id": id, "is_mass_heal_active": state})

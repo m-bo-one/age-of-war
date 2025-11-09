@@ -1332,7 +1332,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rbseb"]
-size = Vector2(68, 127)
+size = Vector2(56, 103)
 
 [node name="medival_melee" type="RigidBody2D"]
 gravity_scale = 0.0
@@ -1345,26 +1345,24 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_4e2w5")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(21, -63)
-scale = Vector2(0.5, 0.5)
+position = Vector2(0, -51)
+scale = Vector2(0.40151516, 0.40151516)
 sprite_frames = SubResource("SpriteFrames_irfen")
-animation = &"attack_2"
-frame = 24
-frame_progress = 0.0789601
+animation = &"walk"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -63.5)
+position = Vector2(0, -51.5)
 shape = SubResource("RectangleShape2D_rbseb")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
-position = Vector2(0, -63)
+position = Vector2(0, -52)
 target_position = Vector2(43, 0)
 
 [node name="Label" type="Label" parent="."]
-offset_left = -34.0
-offset_top = -150.0
-offset_right = 6.0
-offset_bottom = -127.0
+offset_left = -22.0
+offset_top = -127.0
+offset_right = 18.0
+offset_bottom = -104.0
 
 [node name="death_timer" type="Timer" parent="."]
 
@@ -1389,9 +1387,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -24.0
-offset_top = -140.0
+offset_top = -112.0
 offset_right = 24.0
-offset_bottom = -135.0
+offset_bottom = -107.0
 grow_horizontal = 2
 grow_vertical = 2
 
