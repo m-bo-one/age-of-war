@@ -139,5 +139,6 @@ func _on_game_start(msg: String) -> void:
     lobby_loader.get_node("LblAwait").text = msg + "..."
 
     #await get_tree().create_timer(1).timeout
-
+    
+    MusicManager.audioStreamPlayer.play()
     get_tree().change_scene_to_file("res://multiplayer_game.tscn")

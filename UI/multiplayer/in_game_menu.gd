@@ -65,12 +65,11 @@ func advance_age():
 
 
 func _on_advance_pressed():
-    advance_age()
-    #if GlobalVariables.player_exp >= GlobalVariables.get_exp_to_next_age():
-        #advance_age()
-    #else:
-        #$root_label.show()
-        #$root_label.text = "Not enough XP!"
+    if GlobalVariables.player_exp >= GlobalVariables.get_exp_to_next_age():
+        advance_age()
+    else:
+        $root_label.show()
+        $root_label.text = "Not enough XP!"
 
 
 func update_sprites_with_age():
