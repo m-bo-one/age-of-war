@@ -32,6 +32,7 @@ var whoosh_sfx_1_frame = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+    super()
     # Get nodes
     death_timer = get_node("death_timer")
     die_sfx = get_node("sfx/die_sfx")

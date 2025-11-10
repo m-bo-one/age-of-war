@@ -41,6 +41,7 @@ func _ready():
     
     deactivate_buttons()
 
+
 func activate_buttons():
     for button in get_node("button_container").get_children():
         button.disabled = false

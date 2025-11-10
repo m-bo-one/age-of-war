@@ -14,7 +14,7 @@ func _ready() -> void:
 #"is_player_owned": true,
 # 
 func _on_unit_spawn(data: Dictionary) -> Node:
-    var unit = load(data.path).instantiate()
+    var unit: multiplayer_unit = load(data.path).instantiate()
     
     unit.player_id = data.player_id
     unit.position = data.position
@@ -25,6 +25,7 @@ func _on_unit_spawn(data: Dictionary) -> Node:
         unit.position.x += 32
     
     unit.player_side = data.base_side
+    unit.visible = false
     
     # adding for medieval special
     var sprite = Sprite2D.new()
@@ -35,6 +36,10 @@ func _on_unit_spawn(data: Dictionary) -> Node:
     sprite.visible = false
     
     unit.add_child(sprite)
+    
+    # adding unit fog detector
+    var fog_detector = load("res://scenes/multiplayer/unit_fog_detector.tscn").instantiate()
+    unit.add_child(fog_detector)
         
     print("[PEER]=", multiplayer.get_unique_id(), " - unit spawn: ", data)
 

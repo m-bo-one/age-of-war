@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://ck7qewyjsqi43"]
+[gd_scene load_steps=12 format=3 uid="uid://ck7qewyjsqi43"]
 
 [ext_resource type="Script" uid="uid://cwxjct3wc56hm" path="res://bases/multiplayer/player_base.gd" id="1_bgcc8"]
 [ext_resource type="Texture2D" uid="uid://c1xsucbfkbfiv" path="res://age of war sprites/bases/cave/base/base.png" id="2_14yjb"]
+[ext_resource type="PackedScene" uid="uid://mmxy7tnrkoc2" path="res://scenes/multiplayer/unit_fog_detector.tscn" id="2_27qjy"]
 [ext_resource type="Texture2D" uid="uid://clxxa7qqv10di" path="res://age of war sprites/bases/cave/tower_base/base_tower_bottom.png" id="3_27qjy"]
 [ext_resource type="Texture2D" uid="uid://d1sj5rlj0tqvf" path="res://age of war sprites/bases/cave/tower_part/base_tower_part.png" id="4_kf6w1"]
 [ext_resource type="Texture2D" uid="uid://caxi44uddr1wf" path="res://age of war sprites/bases/cave/tower_top/base_tower_top.png" id="5_gw646"]
@@ -37,6 +38,10 @@ script = ExtResource("1_bgcc8")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_interval = 0.05
 replication_config = SubResource("SceneReplicationConfig_bgcc8")
+
+[node name="UnitFogDetector" parent="." instance=ExtResource("2_27qjy")]
+position = Vector2(0, -31)
+scale = Vector2(3, 1)
 
 [node name="base_main_sprite" type="Sprite2D" parent="."]
 position = Vector2(0, -123)

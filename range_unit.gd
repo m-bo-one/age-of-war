@@ -28,7 +28,7 @@ var money_die_reward
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-    
+    super()
     death_timer = get_node("death_timer")
     die_sfx = get_node("sfx/die_sfx")
     range_ray_cast = get_node("RayCast2D_range")

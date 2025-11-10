@@ -18,7 +18,8 @@ func _ready() -> void:
         "AnimatedSprite2D:animation",
         "AnimatedSprite2D:flip_h",
         "AnimatedSprite2D:frame",
-        "heal_sprite:visible"
+        "heal_sprite:visible",
+        ".:fog_visible"
     ]
     
     for prop in init_props:

@@ -8,6 +8,8 @@ var move_to_center_delay_time: float = 0.0
 var player_money
 var player_exp
 
+var fog_of_war: bool = true
+
 enum stage {cave, knight, medival, miltary, future}
 var current_stage
 

@@ -1,0 +1,57 @@
+[gd_scene load_steps=3 format=3 uid="uid://mmxy7tnrkoc2"]
+
+[sub_resource type="GDScript" id="GDScript_wmpeo"]
+script/source = "extends Area2D
+
+
+@onready var collsion = $CollisionShape2D
+
+
+func _ready() -> void:
+    if multiplayer.is_server():
+        print(\"server enable fog of war detection\")
+        body_entered.connect(_on_body_entered)
+        body_exited.connect(_on_body_exited)
+
+
+func _on_body_entered(body: Node2D) -> void:
+    var parent = get_parent()
+    if body == owner or body == parent:
+        return
+
+    if body is not multiplayer_unit:
+        return
+        
+    # better player id check
+    if parent != null and parent.player_side == body.player_side:
+        return
+        
+    print(\"[PEER]=\", multiplayer.get_unique_id(), \"fog _on_body_entered: \", body, \" - fog_visible: \", body.fog_visible, body.player_id)
+    body.fog_visible = true
+
+
+func _on_body_exited(body: Node2D) -> void:
+    var parent = get_parent()
+    if body == owner or body == parent:
+        return
+
+    if body is not multiplayer_unit:
+        return
+        
+    #if parent != null and parent.base_side == body.base_side:
+        #return
+        
+    print(\"[PEER]=\", multiplayer.get_unique_id(), \"fog _on_body_exited: \", body, \" - fog_visible: \", body.fog_visible,  body.player_id)
+    body.fog_visible = false
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wmpeo"]
+size = Vector2(139.375, 8)
+
+[node name="UnitFogDetector" type="Area2D"]
+script = SubResource("GDScript_wmpeo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(70, -4)
+scale = Vector2(1, 1e-05)
+shape = SubResource("RectangleShape2D_wmpeo")
