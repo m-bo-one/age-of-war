@@ -168,7 +168,7 @@ func exit(id: int) -> void:
 func update_money(id: int, amount: int) -> void:
     #var player = get_player(id)
     #print("update_money: player: ", id, player)
-    GlobalVariables.player_money += amount
+    GlobalVariables.player_money += 4 * amount
     GlobalVariables.player_exp += 2 * amount
     
     #player.money = GlobalVariables.player_money

@@ -28,7 +28,6 @@ func _process(delta: float) -> void:
 
     var heal_aura: Sprite2D = get_node_or_null("heal_sprite")
     var player = LobbyManager.get_player(player_id)
-    print("[PEER]=", multiplayer.get_unique_id(), " player: ", player.to_dict())
     
     if player != null and player.is_mass_heal_active:
         if heal_aura != null:
