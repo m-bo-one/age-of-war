@@ -1,31 +1,63 @@
-extends RigidBody2D
+extends base_unit
 class_name multiplayer_unit
 
-enum base_side {left = 1, right}
-
-@export var max_health: int
-@export var health: int
-@export var damage: int
-@export var is_player_owned: bool
-@export var player_id: int:
-    set(id):
-        player_id = id
-@export var player_side: base_side = base_side.left
-
-var fog_visible: bool = false:
+var _fog_visible: bool = false
+var fog_visible: bool:
+    get(): return _fog_visible
     set(value):
-        if value == fog_visible:
+        if value == _fog_visible:
             return
 
-        fog_visible = value
+        _fog_visible = value
         _update_visibility()
 
 var heal_tick_accum: float
 
+var _fog_seen_count: int = 0
+
+
+func add_fog_source() -> void:
+    _fog_seen_count += 1
+    fog_visible = _fog_seen_count > 0
+
+
+func remove_fog_source() -> void:
+    _fog_seen_count = max(_fog_seen_count - 1, 0)
+    fog_visible = _fog_seen_count > 0
+
+
+func on_die_callback() -> void:
+    pass
+        
+        
+func _on_death() -> void:
+    if _health <= 0 and current_state != state.die:
+        on_die_callback()
+        
+        if player_id != 0:
+            if multiplayer.is_server():
+                var op_player = LobbyManager.get_opponent_player(player_id)
+                LobbyManager.update_money.rpc_id(op_player.id, op_player.id, money_die_reward)
+                spawn_show_death_money.rpc_id(op_player.id)
+        elif is_ai():
+            GlobalVariables.player_exp += int(money_die_reward/2)
+        else:
+            GlobalVariables.player_money += money_die_reward
+            GlobalVariables.player_exp += 2 * money_die_reward
+            spawn_show_death_money()
+
+
+@rpc("any_peer", "call_local")
+func spawn_show_death_money():
+    var effect = load("res://show_death_money.tscn").instantiate()
+    effect.global_position = $Control.global_position
+    effect.get_node("Label").text = " +" + str(money_die_reward)
+    get_parent().add_child(effect)
+
 
 func take_damage(outside_damage: int):
-    health -= outside_damage
-    $Control/health_bar.size.x = 48 * health / max_health
+    if multiplayer.is_server():
+        health -= outside_damage
     
     
 func _ready() -> void:
@@ -53,8 +85,8 @@ func _is_local_owner() -> bool:
 var _fade_tween: Tween
         
 func _update_visibility() -> void:
-    print("[PEER]=", multiplayer.get_unique_id(), "_update_visibility - ", player_id, " ; local owner ", _is_local_owner(), " ; fog_visible ", fog_visible)
-    var should_be_visible = _is_local_owner() or fog_visible
+    print("[PEER]=", multiplayer.get_unique_id(), " update_visibility - ", player_id, " ; local owner ", _is_local_owner(), " ; fog_visible ", _fog_visible)
+    var should_be_visible = _is_local_owner() or _fog_visible
     
     var sprite = get_node_or_null("AnimatedSprite2D")
     if sprite == null:
@@ -98,17 +130,3 @@ func _process(delta: float) -> void:
         heal_tick_accum = 0
         if heal_aura != null:
             heal_aura.hide()
-
-
-func is_player_obj(obj: Node):
-    if player_id == 0:
-        return obj.is_player_owned == is_player_owned
-    return obj.player_id == player_id
-
-
-func is_right_side():
-    return is_player_owned == false or player_side == base_side.right
-
-
-func is_ai():
-    return player_id == 0 and is_player_owned == false

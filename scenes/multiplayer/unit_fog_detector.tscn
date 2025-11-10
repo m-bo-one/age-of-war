@@ -19,15 +19,21 @@ func _on_body_entered(body: Node2D) -> void:
     if body == owner or body == parent:
         return
 
-    if body is not multiplayer_unit:
+    if body is not base_unit:
         return
         
     # better player id check
     if parent != null and parent.player_side == body.player_side:
         return
         
-    print(\"[PEER]=\", multiplayer.get_unique_id(), \"fog _on_body_entered: \", body, \" - fog_visible: \", body.fog_visible, body.player_id)
-    body.fog_visible = true
+    body.add_fog_source()
+    print(\"[PEER]=\", multiplayer.get_unique_id(),
+        \" fog_enter body=\", body,
+        \" seen_count=\", body._fog_seen_count,
+        \" fog_visible=\", body.fog_visible,
+        \" player_id=\", body.player_id,
+        \" player_side=\", body.player_side,
+    )
 
 
 func _on_body_exited(body: Node2D) -> void:
@@ -35,14 +41,20 @@ func _on_body_exited(body: Node2D) -> void:
     if body == owner or body == parent:
         return
 
-    if body is not multiplayer_unit:
+    if body is not base_unit:
         return
         
-    #if parent != null and parent.base_side == body.base_side:
-        #return
+    if parent != null and parent.player_side == body.player_side:
+        return
         
-    print(\"[PEER]=\", multiplayer.get_unique_id(), \"fog _on_body_exited: \", body, \" - fog_visible: \", body.fog_visible,  body.player_id)
-    body.fog_visible = false
+    body.remove_fog_source()
+    print(\"[PEER]=\", multiplayer.get_unique_id(),
+        \" fog_exit body=\", body,
+        \" seen_count=\", body._fog_seen_count,
+        \" fog_visible=\", body.fog_visible,
+        \" player_id=\", body.player_id,
+        \" player_side=\", body.player_side,
+    )
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wmpeo"]

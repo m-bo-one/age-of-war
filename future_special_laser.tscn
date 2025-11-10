@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://cdwj7ynfxhkm7"]
 
-[ext_resource type="Script" path="res://future_special_laser.gd" id="1_1hx1a"]
+[ext_resource type="Script" uid="uid://dx222iaq1xdju" path="res://future_special_laser.gd" id="1_1hx1a"]
 [ext_resource type="Texture2D" uid="uid://bygu4kcr2gw7p" path="res://age of war sprites/effects/future_special/future_special_attack0002.png" id="1_eppte"]
 [ext_resource type="Texture2D" uid="uid://cj08p4xc1rta6" path="res://age of war sprites/effects/future_special/future_special_attack0003.png" id="2_cdsws"]
 [ext_resource type="Texture2D" uid="uid://d0jxw6uqmr4dp" path="res://age of war sprites/effects/future_special/future_special_attack0004.png" id="3_v71tf"]

@@ -8,10 +8,7 @@ var damage_frame
 var move_speed
 var starting_health_bar_size
 
-enum state {attack, die, idle, walk}
-var current_state
 var death_timer
-var die_sfx
 
 var sprite_walk_position : Vector2
 var sprite_idle_position : Vector2
@@ -24,8 +21,6 @@ var collision_shape : CollisionShape2D
 
 
 ## die variables
-var money_die_reward
-
 var damage_1_frame = null
 var hit_sfx_1_frame = null
 var whoosh_sfx_1_frame = null
@@ -97,47 +92,27 @@ func _process(delta):
 
     if current_state == state.walk:
         move_state(delta)
-    elif current_state == state.attack:
+    elif current_state == state.melee_attack:
         attack_state()
     elif current_state == state.die:
         pass
     elif current_state == state.idle:
         idle_state()
-            
-    if health <= 0 and current_state != state.die:
-        change_state(state.die)
-        if custom_death_sfx == null:
-            die_sfx.stream = load("res://age of war sprites/audio/sfx/die_0" + str(randi_range(1,5)) + ".mp3")
-        else:
-            die_sfx.stream = load(custom_death_sfx)
-        # stop all sfx
-        stop_all_sfx()
-        die_sfx.play()
-    
-        if player_id != 0:
-            if multiplayer.is_server():
-                var op_player = LobbyManager.get_opponent_player(player_id)
-                LobbyManager.update_money.rpc_id(op_player.id, op_player.id, money_die_reward)
-                spawn_show_death_money.rpc_id(op_player.id)
-                print("[PEER]=", multiplayer.get_unique_id(), " - update player money: id - ", op_player.id)
-        elif is_ai():
-            GlobalVariables.player_exp += int(money_die_reward/2)
-        else:
-            GlobalVariables.player_money += money_die_reward
-            GlobalVariables.player_exp += 2 * money_die_reward
-            spawn_show_death_money()
 
     position.y = 570
     $Label.text = str(health)
     
     
-@rpc("any_peer", "call_local")
-func spawn_show_death_money():
-    var effect = load("res://show_death_money.tscn").instantiate()
-    effect.global_position = $Control.global_position
-    effect.get_node("Label").text = " +" + str(money_die_reward)
-    get_parent().call_deferred("add_child", effect)
-
+func on_die_callback() -> void:
+    change_state(state.die)
+    if custom_death_sfx == null:
+        die_sfx.stream = load("res://age of war sprites/audio/sfx/die_0" + str(randi_range(1,5)) + ".mp3")
+    else:
+        die_sfx.stream = load(custom_death_sfx)
+    # stop all sfx
+    stop_all_sfx()
+    die_sfx.play()
+    
 
 func attack_state():
     pass
@@ -148,7 +123,7 @@ func do_damage(unit_to_be_damaged):
 
 
 func is_idle_or_idle_attacking() -> bool:
-    return current_state == state.idle or current_state == state.attack
+    return current_state == state.idle or current_state == state.melee_attack
 
 
 func is_walking_or_walk_attacking() -> bool:
@@ -163,7 +138,7 @@ func is_enemy():
 func move_state(delta):
     if $RayCast2D.is_colliding() == true:
         if is_enemy() and $RayCast2D.get_collider().current_state != $RayCast2D.get_collider().state.die:
-            change_state(state.attack)
+            change_state(state.melee_attack)
         elif not is_enemy() and ($RayCast2D.get_collider().is_idle_or_idle_attacking()):
             change_state(state.idle)
     else:
@@ -178,7 +153,7 @@ func idle_state():
         change_state(state.walk)
 
 func change_state(new_state):
-    if new_state == state.attack:
+    if new_state == state.melee_attack:
         change_to_attack_state()
     elif new_state == state.die:
         change_to_die_state()
@@ -188,7 +163,7 @@ func change_state(new_state):
         change_to_walk_state()
 
 func change_to_attack_state():
-    current_state = state.attack
+    current_state = state.melee_attack
     animated_sprite.position = sprite_attack_position
     if animated_sprite.flip_h == true:
         animated_sprite.position.x = -animated_sprite.position.x
@@ -229,7 +204,7 @@ func _on_animated_sprite_2d_animation_finished():
         
         
 func _on_animated_sprite_2d_animation_looped():
-    if current_state == state.attack and (animated_sprite.get_animation() == "attack_1" or animated_sprite.get_animation() == "attack_2"):
+    if current_state == state.melee_attack and (animated_sprite.get_animation() == "attack_1" or animated_sprite.get_animation() == "attack_2"):
         # randomly pick between the two animations and play the attack animation again
         animated_sprite.play("attack_" + str(randi_range(1, 2)))
 

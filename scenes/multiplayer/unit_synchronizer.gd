@@ -15,11 +15,12 @@ func _ready() -> void:
         ".:health",
         ".:max_health",
         ".:damage",
+        ".:current_state",
         "AnimatedSprite2D:animation",
         "AnimatedSprite2D:flip_h",
         "AnimatedSprite2D:frame",
         "heal_sprite:visible",
-        ".:fog_visible"
+        ".:fog_visible",
     ]
     
     for prop in init_props:

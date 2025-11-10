@@ -33,8 +33,8 @@
 [ext_resource type="Texture2D" uid="uid://dnh3lkpbdcm3x" path="res://age of war sprites/effects/cave_special_projectile/cave_special_projectile0029.png" id="31_6k0va"]
 [ext_resource type="Texture2D" uid="uid://duk1jdyok0f8p" path="res://age of war sprites/effects/cave_special_projectile/cave_special_projectile0030.png" id="32_6j5dm"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_mt4pq"]
-size = Vector2(32, 32)
+[sub_resource type="CircleShape2D" id="CircleShape2D_domi5"]
+radius = 15.0
 
 [sub_resource type="Gradient" id="Gradient_t1ktk"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.196078)
@@ -161,7 +161,7 @@ properties/5/replication_mode = 0
 script = ExtResource("1_c62pa")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_mt4pq")
+shape = SubResource("CircleShape2D_domi5")
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
 position = Vector2(0, -24)

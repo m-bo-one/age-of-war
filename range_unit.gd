@@ -5,8 +5,6 @@ var move_speed
 var starting_health_bar_size
 
 var multiple_melee_attack_animations: bool = false # default to false
-enum state {die, idle, idle_attack, melee_attack, walk, walk_attack}
-var current_state
 var death_timer
 
 # All state positions
@@ -21,10 +19,6 @@ var animated_sprite: AnimatedSprite2D
 var collision_shape: CollisionShape2D
 var range_ray_cast: RayCast2D
 var melee_ray_cast: RayCast2D
-
-var die_sfx: AudioStreamPlayer2D
-
-var money_die_reward
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -113,25 +107,14 @@ func _process(delta):
     elif current_state == state.walk_attack:
         walk_attack_state(delta)
     
-    if health <= 0 and current_state != state.die:
-        change_state(state.die)
-        die_sfx.stream = load("res://age of war sprites/audio/sfx/die_0" + str(randi_range(1,5)) + ".mp3")
-        die_sfx.play()
-        
-        if player_id != 0:
-            if multiplayer.is_server():
-                var op_player = LobbyManager.get_opponent_player(player_id)
-                LobbyManager.update_money.rpc_id(op_player.id, op_player.id, money_die_reward)
-                spawn_show_death_money.rpc_id(op_player.id)
-        elif is_ai():
-            GlobalVariables.player_exp += int(money_die_reward/2)
-        else:
-            GlobalVariables.player_money += money_die_reward
-            GlobalVariables.player_exp += 2 * money_die_reward
-            spawn_show_death_money()
-    
     position.y = 570
     $Label.text = str(health)
+    
+    
+func on_die_callback() -> void:
+    change_state(state.die)
+    die_sfx.stream = load("res://age of war sprites/audio/sfx/die_0" + str(randi_range(1,5)) + ".mp3")
+    die_sfx.play()
 
 
 # handle the states
@@ -216,13 +199,6 @@ func _on_animated_sprite_2d_animation_finished():
 func _on_death_timer_timeout():
     self.queue_free()
 
-
-@rpc("any_peer", "call_local")
-func spawn_show_death_money():
-    var effect = load("res://show_death_money.tscn").instantiate()
-    effect.global_position = $Control.global_position
-    effect.get_node("Label").text = " +" + str(money_die_reward)
-    get_parent().add_child(effect)
 
 func is_idle_or_idle_attacking():
     if current_state == state.idle or current_state == state.idle_attack or current_state == state.melee_attack:

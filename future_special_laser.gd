@@ -10,6 +10,9 @@ func _ready():
 
 
 func _on_body_entered(body):
+    if player_id != 0 and not multiplayer.is_server():
+        return
+
     if body is melee_unit or body is range_unit:
         if not is_player_obj(body):
             body.take_damage(damage)

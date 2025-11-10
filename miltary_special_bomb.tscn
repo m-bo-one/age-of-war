@@ -135,6 +135,10 @@ animations = [{
 
 [node name="miltary_special_bomb" type="Area2D"]
 script = ExtResource("1_ki1jl")
+damage = null
+direction = null
+time_to_die = null
+speed = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_hp7ir")

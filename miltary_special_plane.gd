@@ -20,7 +20,7 @@ func _process(delta: float):
     if player_id == 0:
         _process_singleplayer(delta)
         return
-        
+
     _process_multiplayer(delta)
         
         
